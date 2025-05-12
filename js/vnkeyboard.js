@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Idle detection variables
   let idleTimer = null;
-  const idleTimeout = 1000;
+  const idleTimeout = 9000;
   const modalTimeout = 5000;
   const page2 = document.getElementById("page2");
   const page1 = document.getElementById("page1");
