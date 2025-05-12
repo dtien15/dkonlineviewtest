@@ -1,0 +1,20 @@
+{
+  "QR001": {
+    "name": "Nguyễn Văn A",
+    "age": 30,
+    "patientId": "BN001",
+    "address": ""
+  },
+  "QR002": {
+    "name": "Trần Thị B",
+    "age": 25,
+    "patientId": "BN002",
+    "address": "Nha trang"
+  },
+  "QR003": {
+    "name": "Lê Văn C",
+    "age": 40,
+    "patientId": "BN003",
+    "address": "Hà Nội"
+  }
+}
