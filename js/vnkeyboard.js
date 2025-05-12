@@ -30,27 +30,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Idle detection variables
   let idleTimer = null;
-  const idleTimeout = 6000;
+  const idleTimeout = 1000;
   const modalTimeout = 5000;
   const page2 = document.getElementById("page2");
   const page1 = document.getElementById("page1");
   const idleModal = document.getElementById("idleModal");
   const continueBtn = document.getElementById("continueBtn");
   const countdownElement = document.getElementById("countdown");
+  let isModalOpen = false; // Track if the modal is open
+
+  // Function to clear all inputs in page2
+  function clearPage2Inputs() {
+    document.querySelectorAll("#page2 input[data-vnkeys]").forEach((input) => {
+      input.value = "";
+    });
+  }
 
   // Function to reset idle timer
   function resetIdleTimer() {
     if (idleTimer) clearTimeout(idleTimer);
-    if (!page2.classList.contains("d-none")) {
+    idleTimer = null;
+    if (!page2.classList.contains("d-none") && !isModalOpen) {
       idleTimer = setTimeout(showIdleModal, idleTimeout);
     }
   }
 
   // Function to show idle modal and start 5-second countdown
   function showIdleModal() {
-    if (!page2.classList.contains("d-none")) {
+    if (!page2.classList.contains("d-none") && !isModalOpen) {
       const bootstrapModal = new bootstrap.Modal(idleModal);
       bootstrapModal.show();
+      isModalOpen = true;
+
       let countdown = 5;
       countdownElement.textContent = countdown;
 
@@ -59,12 +70,15 @@ document.addEventListener("DOMContentLoaded", () => {
         countdownElement.textContent = countdown;
         if (countdown <= 0) {
           clearInterval(countdownInterval);
-          // Redirect to page1
+          // Clear inputs and redirect to page1
+          clearPage2Inputs();
           page2.classList.add("d-none");
           page1.classList.remove("d-none");
           bootstrapModal.hide();
+          isModalOpen = false;
           kbContainer.classList.remove("open");
           activeInput = null;
+          resetIdleTimer();
         }
       }, 1000);
 
@@ -72,14 +86,30 @@ document.addEventListener("DOMContentLoaded", () => {
       continueBtn.onclick = () => {
         clearInterval(countdownInterval);
         bootstrapModal.hide();
+        isModalOpen = false;
         resetIdleTimer();
       };
+
+      // Handle modal close event (e.g., clicking outside the modal)
+      idleModal.addEventListener(
+        "hidden.bs.modal",
+        () => {
+          clearInterval(countdownInterval);
+          isModalOpen = false;
+          resetIdleTimer();
+        },
+        { once: true }
+      );
     }
   }
 
   // Reset idle timer on user interaction
   ["mousemove", "click", "keypress"].forEach((event) => {
-    document.addEventListener(event, resetIdleTimer);
+    document.addEventListener(event, () => {
+      if (!isModalOpen) {
+        resetIdleTimer();
+      }
+    });
   });
 
   // Start idle timer when page2 is shown
@@ -88,8 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
       resetIdleTimer();
     } else {
       if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = null;
       const bootstrapModal = bootstrap.Modal.getInstance(idleModal);
-      if (bootstrapModal) bootstrapModal.hide();
+      if (bootstrapModal) {
+        bootstrapModal.hide();
+        isModalOpen = false;
+      }
     }
   });
   observer.observe(page2, { attributes: true, attributeFilter: ["class"] });
@@ -116,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("nameInput").value = p.name;
           document.getElementById("ageInput").value = p.age;
           document.getElementById("idInput").value = p.patientId;
-          document.getElementById("addressInput").value = p.address;
         } else {
           alert("Mã QR không hợp lệ!");
         }
@@ -240,10 +273,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("registerBtn").addEventListener("click", () => {
     page1.classList.add("d-none");
     page2.classList.remove("d-none");
+    clearPage2Inputs(); // Clear inputs when returning to page2
   });
 
   document.getElementById("revisitBtn").addEventListener("click", () => {
     page1.classList.add("d-none");
     page2.classList.remove("d-none");
+    clearPage2Inputs(); // Clear inputs when returning to page2
   });
 });
