@@ -45,4 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
       qrInput.focus();
     }
   });
+
+  // --- Viết hoa chữ cái đầu mỗi từ cho Họ tên ---
+  const nameInput = document.getElementById("nameInput");
+  nameInput.addEventListener("input", (e) => {
+    // lưu vị trí con trỏ để không bị nhảy khi set lại value
+    const pos = e.target.selectionStart;
+    // chuyển toàn bộ về lowercase rồi title-case
+    let v = e.target.value
+      .toLowerCase()
+      .replace(/(?:^|\s)\S/g, (c) => c.toUpperCase());
+    e.target.value = v;
+    // đặt lại con trỏ
+    e.target.setSelectionRange(pos, pos);
+  });
 });

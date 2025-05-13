@@ -11,7 +11,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  background-color: #6c9ff7 !important;
   min-height: 100vh;
   padding: 1rem;
 }
@@ -28,23 +28,6 @@ body {
 
 .hidden {
   display: none;
-}
-
-.btn {
-  display: inline-block;
-  padding: 0.8rem 1.5rem;
-  margin: 0.5rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: var(--radius);
-  background: var(--color-primary);
-  color: #fff;
-  cursor: pointer;
-  transition: transform var(--transition);
-}
-
-.btn:hover {
-  transform: translateY(-2px);
 }
 
 .form-group {
@@ -98,13 +81,6 @@ input[type="number"]:focus {
   box-sizing: border-box;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  min-height: 100vh;
-  padding: 1rem;
-}
-
 input[type="text"],
 input[type="number"] {
   padding: 0.6rem 0.8rem;
@@ -147,4 +123,118 @@ input[type="number"]:focus {
 .simple-keyboard.open {
   display: block;
   opacity: 1;
+}
+/* Gợi ý chữ */
+
+.suggestions button {
+  background: #fff;
+  border: 1px solid #b5b5b5;
+  border-radius: 5px;
+  box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.3);
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.suggestions button:hover {
+  background: #fff;
+  border: 1px solid #b5b5b5;
+}
+
+/* Màu ô bàn phím  */
+.hg-theme-default {
+  background-color: black !important;
+}
+
+.hg-button.hg-standardBtn[data-skbtn^="`"],
+.hg-button.hg-standardBtn[data-skbtn^="-"],
+.hg-button.hg-standardBtn[data-skbtn^="="],
+.hg-button.hg-standardBtn[data-skbtn="0"],
+.hg-button.hg-standardBtn[data-skbtn="1"],
+.hg-button.hg-standardBtn[data-skbtn="2"],
+.hg-button.hg-standardBtn[data-skbtn="3"],
+.hg-button.hg-standardBtn[data-skbtn="4"],
+.hg-button.hg-standardBtn[data-skbtn="5"],
+.hg-button.hg-standardBtn[data-skbtn="6"],
+.hg-button.hg-standardBtn[data-skbtn="7"],
+.hg-button.hg-standardBtn[data-skbtn="8"],
+.hg-button.hg-standardBtn[data-skbtn="9"] {
+  background-color: #aecae4;
+  color: black;
+  border: none;
+}
+
+.hg-button.hg-standardBtn[data-skbtn="'"],
+.hg-button.hg-standardBtn[data-skbtn="."],
+.hg-button.hg-standardBtn[data-skbtn="/"],
+.hg-button.hg-standardBtn[data-skbtn=";"],
+.hg-button.hg-standardBtn[data-skbtn=","],
+.hg-button.hg-standardBtn[data-skbtn="\\"],
+.hg-button.hg-standardBtn[data-skbtn="["],
+.hg-button.hg-standardBtn[data-skbtn="]"],
+.hg-button.hg-button-space[data-skbtn^="{space}"],
+.hg-button.hg-standardBtn[data-skbtn^="q"],
+.hg-button.hg-standardBtn[data-skbtn^="w"],
+.hg-button.hg-standardBtn[data-skbtn^="e"],
+.hg-button.hg-standardBtn[data-skbtn^="r"],
+.hg-button.hg-standardBtn[data-skbtn^="t"],
+.hg-button.hg-standardBtn[data-skbtn^="y"],
+.hg-button.hg-standardBtn[data-skbtn^="u"],
+.hg-button.hg-standardBtn[data-skbtn^="i"],
+.hg-button.hg-standardBtn[data-skbtn^="o"],
+.hg-button.hg-standardBtn[data-skbtn^="p"],
+.hg-button.hg-standardBtn[data-skbtn^="a"],
+.hg-button.hg-standardBtn[data-skbtn^="s"],
+.hg-button.hg-standardBtn[data-skbtn^="d"],
+.hg-button.hg-standardBtn[data-skbtn^="f"],
+.hg-button.hg-standardBtn[data-skbtn^="g"],
+.hg-button.hg-standardBtn[data-skbtn^="h"],
+.hg-button.hg-standardBtn[data-skbtn^="j"],
+.hg-button.hg-standardBtn[data-skbtn^="k"],
+.hg-button.hg-standardBtn[data-skbtn^="l"],
+.hg-button.hg-standardBtn[data-skbtn^="z"],
+.hg-button.hg-standardBtn[data-skbtn^="x"],
+.hg-button.hg-standardBtn[data-skbtn^="c"],
+.hg-button.hg-standardBtn[data-skbtn^="v"],
+.hg-button.hg-standardBtn[data-skbtn^="b"],
+.hg-button.hg-standardBtn[data-skbtn^="n"],
+.hg-button.hg-standardBtn[data-skbtn^="m"] {
+  background-color: #aecae4;
+  color: black;
+}
+
+.hg-button.hg-standardBtn[data-skbtn=".com"],
+.hg-button.hg-button-tab[data-skbtn="{tab}"],
+.hg-button.hg-button-lock[data-skbtn="{lock}"],
+.hg-button.hg-button-shift[data-skbtn="{shift}"],
+.hg-button.hg-standardBtn[data-skbtn="@"] {
+  background-color: #ffffff;
+  color: black;
+}
+
+/* Xác nhận */
+.hg-button.hg-button-enter[data-skbtn="{enter}"] {
+  background-color: #ff9800;
+  color: #ffffff;
+}
+
+/* Xóa */
+.hg-button.hg-button-bksp[data-skbtn="{bksp}"] {
+  background-color: #f44336;
+  color: #ffffff;
+}
+
+/* Ẩn nút */
+.hg-button.hg-standardBtn[data-skbtn^="`"],
+.hg-button.hg-standardBtn[data-skbtn^="-"],
+.hg-button.hg-standardBtn[data-skbtn^="="],
+.hg-button.hg-standardBtn[data-skbtn^="["],
+.hg-button.hg-standardBtn[data-skbtn^="]"],
+.hg-button.hg-standardBtn[data-skbtn^="\\"],
+.hg-button.hg-standardBtn[data-skbtn^=";"],
+.hg-button.hg-standardBtn[data-skbtn^="'"],
+.hg-button.hg-standardBtn[data-skbtn^=","],
+.hg-button.hg-button-tab[data-skbtn="{tab}"],
+.hg-button.hg-button-shift[data-skbtn="{shift}"],
+.hg-button.hg-button-lock[data-skbtn="{lock}"] {
+  display: none;
 }

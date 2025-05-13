@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "{bksp}": "Xóa",
       "{shift}": "Shift",
       "{lock}": "Caps",
-      "{space}": " ",
+      "{space}": "Khoảng cách",
       "{tab}": "Tab",
     },
     layoutName: "default",
@@ -230,6 +230,12 @@ document.addEventListener("DOMContentLoaded", () => {
       keyboard.setInput(val);
       activeInput.focus();
       showDiacriticSuggestions(btn);
+
+      if (keyboard.options.layoutName === "shift") {
+        keyboard.setOptions({ layoutName: "default" });
+        kbContainer.classList.add("open"); // Đảm bảo vẫn hiện
+      }
+
       return;
     } else return;
 
@@ -252,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
     list.forEach((ch) => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "btn btn-sm btn-secondary";
+      btn.className = "btn";
       btn.textContent = ch;
       btn.addEventListener("click", (e) => {
         // 1) Ngăn không cho click này bị coi là "click ngoài"
