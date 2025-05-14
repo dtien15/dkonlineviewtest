@@ -26,78 +26,6 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.hidden {
-  display: none;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-label {
-  font-weight: 500;
-  margin-bottom: 0.3rem;
-  display: block;
-}
-
-input[type="text"],
-input[type="number"] {
-  width: 100%;
-  padding: 0.6rem 0.8rem;
-  font-size: 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(51, 102, 255, 0.15);
-  outline: none;
-}
-
-/* Bàn phím ảo */
-.simple-keyboard {
-  position: fixed;
-  display: none;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  z-index: 999;
-}
-.simple-keyboard.open {
-  display: block;
-  opacity: 1;
-}
-
-:root {
-  --color-primary: #3366ff;
-  --color-border: #ccc;
-  --radius: 5px;
-  --transition: 0.2s ease;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-input[type="text"],
-input[type="number"] {
-  padding: 0.6rem 0.8rem;
-  font-size: 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(51, 102, 255, 0.15);
-  outline: none;
-}
-
-/* Blinking cursor effect */
 .blinking-cursor {
   animation: blink 1s step-end infinite;
 }
@@ -111,7 +39,7 @@ input[type="number"]:focus {
   }
 }
 
-/* Bàn phím ảo */
+/*--------------- Bàn phím ảo */
 .simple-keyboard {
   position: fixed;
   display: none;
@@ -124,7 +52,7 @@ input[type="number"]:focus {
   display: block;
   opacity: 1;
 }
-/* Gợi ý chữ */
+/*--------------- Gợi ý chữ dấu*/
 
 .suggestions button {
   background: #fff;
@@ -140,7 +68,7 @@ input[type="number"]:focus {
   border: 1px solid #b5b5b5;
 }
 
-/* Màu ô bàn phím  */
+/*--------------- Màu ô bàn phím*/
 .hg-theme-default {
   background-color: black !important;
 }
@@ -211,19 +139,16 @@ input[type="number"]:focus {
   color: black;
 }
 
-/* Xác nhận */
 .hg-button.hg-button-enter[data-skbtn="{enter}"] {
   background-color: #ff9800;
   color: #ffffff;
 }
 
-/* Xóa */
 .hg-button.hg-button-bksp[data-skbtn="{bksp}"] {
   background-color: #f44336;
   color: #ffffff;
 }
 
-/* Ẩn nút */
 .hg-button.hg-standardBtn[data-skbtn^="`"],
 .hg-button.hg-standardBtn[data-skbtn^="-"],
 .hg-button.hg-standardBtn[data-skbtn^="="],
@@ -238,3 +163,5 @@ input[type="number"]:focus {
 .hg-button.hg-button-lock[data-skbtn="{lock}"] {
   display: none;
 }
+
+/*--------------- Code mới*/

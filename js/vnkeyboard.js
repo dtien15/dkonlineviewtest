@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Idle-modal + timeout ---
   let idleTimer = null,
     isModalOpen = false;
-  const idleTimeout = 9000,
+  const idleTimeout = 9000000000,
     page1 = document.getElementById("page1");
   const page2 = document.getElementById("page2");
   const idleModal = document.getElementById("idleModal");
@@ -190,9 +190,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const r = next.getBoundingClientRect(),
           p = page2.getBoundingClientRect();
         const m = 8;
+
+        const kbHeight1 = kbContainer.getBoundingClientRect().height;
+        // Tính vị trí top mặc định (dưới input)
+        let topPos1 = r.bottom + m;
+        // Nếu tràn xuống dưới viewport thì nhảy lên trên input
+        if (topPos1 + kbHeight1 > window.innerHeight) {
+          topPos1 = r.top - m - kbHeight1;
+        }
+
         Object.assign(kbContainer.style, {
           position: "fixed",
-          top: `${r.bottom + m}px`,
+          top: `${topPos1}px`,
           left: `${p.left}px`,
           width: `${p.width}px`,
         });
@@ -293,18 +302,36 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Khi input focus ---
   document.querySelectorAll("input[data-vnkeys]").forEach((inp) => {
     inp.addEventListener("focus", () => {
+      // Bỏ đi các blinking cursor cũ
       document
         .querySelectorAll("input[data-vnkeys]")
         .forEach((i) => i.classList.remove("blinking-cursor"));
       inp.classList.add("blinking-cursor");
+
       activeInput = inp;
       keyboard.setInput(inp.value);
-      const r = inp.getBoundingClientRect(),
-        p = page2.getBoundingClientRect();
+
+      const r = inp.getBoundingClientRect();
+      const p = page2.getBoundingClientRect();
       const m = 8;
+
+      // Đầu tiên hiển thị tạm để đo được chiều cao thật của bàn phím
+      kbContainer.style.visibility = "hidden";
+      kbContainer.classList.add("open");
+      const kbHeight = kbContainer.getBoundingClientRect().height;
+      kbContainer.classList.remove("open");
+      kbContainer.style.visibility = "";
+
+      // Tính vị trí top mặc định (dưới input)
+      let topPos = r.bottom + m;
+      // Nếu tràn xuống dưới viewport thì nhảy lên trên input
+      if (topPos + kbHeight > window.innerHeight) {
+        topPos = r.top - m - kbHeight;
+      }
+
       Object.assign(kbContainer.style, {
         position: "fixed",
-        top: `${r.bottom + m}px`,
+        top: `${topPos}px`,
         left: `${p.left}px`,
         width: `${p.width}px`,
       });
@@ -339,4 +366,5 @@ document.addEventListener("DOMContentLoaded", () => {
     page2.classList.remove("d-none");
     clearPage2Inputs();
   });
+  // --- Hiệu ứng ---
 });
