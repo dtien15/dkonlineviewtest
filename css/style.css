@@ -23,8 +23,8 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  max-width: 600px;
+  width: 800px;
+  max-width: 800px;
   background: #fff;
   padding: 1.5rem;
   border-radius: var(--radius);
@@ -172,5 +172,3 @@ body {
 .hg-button.hg-button-lock[data-skbtn="{lock}"] {
   display: none;
 }
-
-/*--------------- Code mới*/
