@@ -15,7 +15,7 @@
   </head>
   <body>
     <!-- Trang chủ -->
-    <div id="page1" class="card mx-auto mt-4">
+    <div id="page1" class="card mx-auto">
       <div class="card-body text-center">
         <button id="registerBtn" class="btn btn-success">Đăng ký</button>
         <button id="revisitBtn" class="btn btn-info">Tái khám</button>
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Trang quét/nhập QR -->
-    <div id="page2" class="card mx-auto mt-4 d-none">
+    <div id="page2" class="card mx-auto d-none">
       <div class="card-body">
         <h2 id="formTitle" class="text-center mb-4">Quét mã QR</h2>
         <div class="mb-3">
@@ -46,6 +46,7 @@
                 id="nameInput"
                 data-vnkeys
                 class="form-control"
+                placeholder="Nhập họ tên"
                 autocomplete="off"
               />
             </div>
@@ -58,6 +59,7 @@
                 pattern="\d*"
                 data-vnkeys
                 class="form-control"
+                placeholder="Nhập tuổi"
                 autocomplete="off"
               />
             </div>
@@ -70,6 +72,7 @@
               id="idInput"
               data-vnkeys
               class="form-control"
+              placeholder="Nhập mã bệnh nhân"
               autocomplete="off"
             />
           </div>
@@ -81,6 +84,7 @@
               id="addressInput"
               data-vnkeys
               class="form-control"
+              placeholder="Nhập địa chỉ"
               autocomplete="off"
             />
           </div>

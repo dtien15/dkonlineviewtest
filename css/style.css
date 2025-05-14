@@ -10,6 +10,7 @@
 }
 
 body {
+  position: relative;
   font-family: Arial, sans-serif;
   background-color: #6c9ff7 !important;
   min-height: 100vh;
@@ -18,8 +19,12 @@ body {
 
 #page1,
 #page2 {
-  max-width: 700px;
-  margin: 2rem auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  max-width: 600px;
   background: #fff;
   padding: 1.5rem;
   border-radius: var(--radius);
