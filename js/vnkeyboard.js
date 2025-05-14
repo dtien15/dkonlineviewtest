@@ -149,68 +149,128 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleKeyPress(btn) {
     if (!activeInput) return;
 
-    // Shift / Caps
-    if (btn === "{shift}" || btn === "{lock}") {
-      const layout =
-        keyboard.options.layoutName === "default" ? "shift" : "default";
-      keyboard.setOptions({ layoutName: layout });
-      kbContainer.classList.add("open");
-      activeInput.focus();
-      return;
-    }
-
     // Enter
     if (btn === "{enter}") {
-      if (activeInput.id === "qrInput") {
+      // Xử lý QR Input
+      if (activeInput?.id === "qrInput") {
         const code = activeInput.value.trim();
         if (patients[code]) {
           const p = patients[code];
           document.getElementById("nameInput").value = p.name;
           document.getElementById("ageInput").value = p.age;
-          document.getElementById("idInput").value = p.patientId;
-        } else alert("Mã QR không hợp lệ!");
+          document.getElementById("idInput").value = p.id;
+        } else {
+          alert("Mã QR không hợp lệ!");
+        }
         activeInput.value = "";
         activeInput.focus();
         kbContainer.classList.remove("open");
+        Object.assign(kbContainer.style, {
+          position: "",
+          top: "",
+          left: "",
+          width: "",
+          visibility: "",
+          display: "",
+          zIndex: "",
+        });
         activeInput = null;
         return;
       }
 
-      // Chuyển focus tới input tiếp theo
+      // Lấy danh sách input & vị trí hiện tại
       const inputs = [...document.querySelectorAll("input[data-vnkeys]")];
       const idx = inputs.indexOf(activeInput);
-      if (idx >= 0 && idx < inputs.length - 1) {
-        activeInput.classList.remove("blinking-cursor");
-        const next = inputs[idx + 1];
-        next.focus();
-        next.classList.add("blinking-cursor");
-        activeInput = next;
-        keyboard.setInput(next.value);
-        // di chuyển keyboard
-        const r = next.getBoundingClientRect(),
-          p = page2.getBoundingClientRect();
-        const m = 8;
 
-        const kbHeight1 = kbContainer.getBoundingClientRect().height;
-        // Tính vị trí top mặc định (dưới input)
-        let topPos1 = r.bottom + m;
-        // Nếu tràn xuống dưới viewport thì nhảy lên trên input
-        if (topPos1 + kbHeight1 > window.innerHeight) {
-          topPos1 = r.top - m - kbHeight1;
-        }
-
-        Object.assign(kbContainer.style, {
-          position: "fixed",
-          top: `${topPos1}px`,
-          left: `${p.left}px`,
-          width: `${p.width}px`,
-        });
-        kbContainer.classList.add("open");
-      } else {
+      // Nếu đang ở input cuối cùng (addressInput)
+      if (idx === inputs.length - 1) {
         activeInput.classList.remove("blinking-cursor");
         activeInput.blur();
         kbContainer.classList.remove("open");
+        Object.assign(kbContainer.style, {
+          position: "",
+          top: "",
+          left: "",
+          width: "",
+          visibility: "",
+          display: "",
+          zIndex: "",
+        });
+        if (keyboard.clearInput) {
+          keyboard.clearInput();
+        }
         activeInput = null;
+        return;
+      }
+
+      // Chuyển focus tới input kế tiếp
+      if (idx >= 0 && idx < inputs.length - 1) {
+        activeInput.classList.remove("blinking-cursor");
+        const inp = inputs[idx + 1];
+        inp.focus();
+        inp.classList.add("blinking-cursor");
+        activeInput = inp;
+
+        // Đồng bộ giá trị với bàn phím
+        keyboard.setInput(inp.value);
+        if (keyboard.options) {
+          keyboard.options.inputName = inp.id;
+        }
+
+        // Tính vị trí hiển thị bàn phím
+        const r = inp.getBoundingClientRect();
+        const p = page2.getBoundingClientRect();
+        const m = 8;
+
+        // Đo chiều cao bàn phím
+        kbContainer.style.visibility = "hidden";
+        kbContainer.classList.add("open");
+        const kbHeight = kbContainer.getBoundingClientRect().height;
+        kbContainer.classList.remove("open");
+        kbContainer.style.visibility = "";
+
+        // Tọa độ top mặc định
+        let topPos = r.bottom + m;
+        const viewportHeight = window.innerHeight;
+
+        // Điều chỉnh nếu tràn viewport
+        if (topPos + kbHeight > viewportHeight) {
+          topPos = r.top - m - kbHeight;
+          if (topPos < 0) topPos = m;
+        } else if (topPos < 0) {
+          topPos = m;
+        }
+
+        // Cập nhật style và hiển thị
+        Object.assign(kbContainer.style, {
+          position: "fixed",
+          top: `${topPos}px`,
+          left: `${p.left}px`,
+          width: `${p.width}px`,
+          visibility: "visible",
+          display: "block",
+          zIndex: "9999",
+        });
+        kbContainer.classList.add("open");
+
+        // Đảm bảo input giữ focus
+        setTimeout(() => {
+          if (document.activeElement !== inp) {
+            inp.focus();
+          }
+        }, 100);
+
+        // Ngăn việc tự tắt bàn phím ngay khi focus addressInput
+        if (inp.id === "addressInput") {
+          const originalRemove = kbContainer.classList.remove;
+          kbContainer.classList.remove = function (className) {
+            if (className === "open") return;
+            return originalRemove.apply(this, arguments);
+          };
+          setTimeout(() => {
+            kbContainer.classList.remove = originalRemove;
+          }, 1000);
+        }
       }
       return;
     }
@@ -366,5 +426,4 @@ document.addEventListener("DOMContentLoaded", () => {
     page2.classList.remove("d-none");
     clearPage2Inputs();
   });
-  // --- Hiệu ứng ---
 });
