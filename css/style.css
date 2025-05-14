@@ -54,6 +54,10 @@ body {
 }
 /*--------------- Gợi ý chữ dấu*/
 
+.suggestions {
+  height: 45px;
+}
+
 .suggestions button {
   background: #fff;
   border: 1px solid #b5b5b5;

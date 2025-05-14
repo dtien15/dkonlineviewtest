@@ -6,12 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
     rootElement: kbContainer,
     onKeyPress: (btn) => handleKeyPress(btn),
     display: {
-      "{enter}": "Xác nhận",
+      "{enter}": "Tiếp tục",
       "{bksp}": "Xóa",
       "{shift}": "Shift",
       "{lock}": "Caps",
       "{space}": "Khoảng cách",
       "{tab}": "Tab",
+      "{hide}": "Ẩn Bàn Phím", // custom button
+    },
+    layout: {
+      default: [
+        "1 2 3 4 5 6 7 8 9 0 {bksp}",
+        "q w e r t y u i o p",
+        "a s d f g h j k l {enter}",
+        "{shift} z x c v b n m {hide}", // chèn nút ở hàng cuối
+        "{lock} {space} {tab}",
+      ],
     },
     layoutName: "default",
   });
@@ -148,7 +158,20 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Xử lý bấm phím ---
   function handleKeyPress(btn) {
     if (!activeInput) return;
-
+    if (btn === "{hide}") {
+      kbContainer.classList.remove("open");
+      Object.assign(kbContainer.style, {
+        visibility: "",
+        display: "",
+        position: "",
+        top: "",
+        left: "",
+        width: "",
+        zIndex: "",
+      });
+      activeInput = null;
+      return;
+    }
     // Enter
     if (btn === "{enter}") {
       // Xử lý QR Input
@@ -399,31 +422,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // --- Ẩn keyboard khi click ngoài ---
-  document.addEventListener("click", (e) => {
-    if (
-      !e.target.closest(".simple-keyboard") &&
-      !e.target.matches("input[data-vnkeys]") &&
-      !e.target.closest(".hg-button") &&
-      !e.target.matches("#continueBtn")
-    ) {
-      kbContainer.classList.remove("open");
-      document
-        .querySelectorAll("input[data-vnkeys]")
-        .forEach((i) => i.classList.remove("blinking-cursor"));
-      activeInput = null;
-    }
-  });
-
   // --- Nút chuyển trang ---
   document.getElementById("registerBtn").addEventListener("click", () => {
     page1.classList.add("d-none");
     page2.classList.remove("d-none");
     clearPage2Inputs();
+    // Mặc định focus vào ô QR
+    document.getElementById("qrInput").focus();
   });
   document.getElementById("revisitBtn").addEventListener("click", () => {
     page1.classList.add("d-none");
     page2.classList.remove("d-none");
     clearPage2Inputs();
+    // Mặc định focus vào ô QR
+    document.getElementById("qrInput").focus();
   });
 });
