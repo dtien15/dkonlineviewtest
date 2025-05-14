@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     rootElement: kbContainer,
     onKeyPress: (btn) => handleKeyPress(btn),
     display: {
-      "{enter}": "Tiếp tục",
+      "{enter}": "Tiếp theo",
       "{bksp}": "Xóa",
       "{shift}": "Shift",
       "{lock}": "Caps",
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Idle-modal + timeout ---
   let idleTimer = null,
     isModalOpen = false;
-  const idleTimeout = 9000000000,
+  const idleTimeout = 9000,
     page1 = document.getElementById("page1");
   const page2 = document.getElementById("page2");
   const idleModal = document.getElementById("idleModal");
@@ -282,18 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
             inp.focus();
           }
         }, 100);
-
-        // Ngăn việc tự tắt bàn phím ngay khi focus addressInput
-        if (inp.id === "addressInput") {
-          const originalRemove = kbContainer.classList.remove;
-          kbContainer.classList.remove = function (className) {
-            if (className === "open") return;
-            return originalRemove.apply(this, arguments);
-          };
-          setTimeout(() => {
-            kbContainer.classList.remove = originalRemove;
-          }, 1000);
-        }
       }
       return;
     }
@@ -436,5 +424,19 @@ document.addEventListener("DOMContentLoaded", () => {
     clearPage2Inputs();
     // Mặc định focus vào ô QR
     document.getElementById("qrInput").focus();
+  });
+
+  //-----------------Viết hoa chữ cái đầu mỗi từ cho Họ tên
+  const nameInput = document.getElementById("nameInput");
+  nameInput.addEventListener("input", (e) => {
+    // lưu vị trí con trỏ để không bị nhảy khi set lại value
+    const pos = e.target.selectionStart;
+    // chuyển toàn bộ về lowercase rồi title-case
+    let v = e.target.value
+      .toLowerCase()
+      .replace(/(?:^|\s)\S/g, (c) => c.toUpperCase());
+    e.target.value = v;
+    // đặt lại con trỏ
+    e.target.setSelectionRange(pos, pos);
   });
 });
