@@ -40,6 +40,7 @@ body {
   transition: 0.1s;
   cursor: pointer;
   margin: 15px;
+  width: 400px;
 }
 
 .btn-nut div {
@@ -132,11 +133,11 @@ body {
 }
 
 .btn-taiKham:active::before {
-  box-shadow: inset 2px -5px 20px rgb(19, 35, 174);
+  box-shadow: inset 2px -5px 20px rgb(199, 199, 253);
 }
 
 .btn-taiKham:active::after {
-  box-shadow: inset -2px 5px 20px rgb(46, 1, 1);
+  box-shadow: inset -2px 5px 20px rgb(51, 51, 57);
 }
 
 /*----------------- INput */

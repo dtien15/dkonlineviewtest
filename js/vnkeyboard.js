@@ -160,6 +160,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!activeInput) return;
     if (btn === "{hide}") {
       kbContainer.classList.remove("open");
+
+      // xóa hiệu ứng
+      document
+        .querySelectorAll("input[data-vnkeys]")
+        .forEach((i) => i.classList.remove("blinking-cursor"));
       Object.assign(kbContainer.style, {
         visibility: "",
         display: "",
