@@ -4,7 +4,10 @@
   --radius: 5px;
   --transition: 0.2s ease;
 }
-
+html,
+body {
+  touch-action: pan-x pan-y;
+}
 * {
   box-sizing: border-box;
 }

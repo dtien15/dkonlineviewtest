@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Idle-modal + timeout ---
   let idleTimer = null,
     isModalOpen = false;
-  const idleTimeout = 9000,
+  const idleTimeout = 9000000,
     page1 = document.getElementById("page1");
   const page2 = document.getElementById("page2");
   const idleModal = document.getElementById("idleModal");
@@ -494,5 +494,26 @@ document.addEventListener("DOMContentLoaded", () => {
     e.target.value = v;
     // đặt lại con trỏ
     e.target.setSelectionRange(pos, pos);
+  });
+
+  // JS
+  const fsBtn = document.getElementById("fullscreenBtn");
+
+  fsBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement) {
+      // Yêu cầu vào chế độ toàn màn hình
+      document.documentElement
+        .requestFullscreen?.()
+        .catch((err) =>
+          console.error(`Không thể bật toàn màn hình: ${err.message}`)
+        );
+    } else {
+      // Thoát chế độ toàn màn hình
+      document
+        .exitFullscreen?.()
+        .catch((err) =>
+          console.error(`Không thể thoát toàn màn hình: ${err.message}`)
+        );
+    }
   });
 });
