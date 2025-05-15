@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "{lock}": "Caps",
       "{space}": "Khoảng cách",
       "{tab}": "Tab",
-      "{hide}": "Ẩn Bàn Phím", // custom button
+      "{hide}": "Ẩn bàn phím", // custom button
     },
     layout: {
       default: [
@@ -496,7 +496,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.target.setSelectionRange(pos, pos);
   });
 
-  // JS
+  //------------- Chặn sự kiện zoom màn hình
   const fsBtn = document.getElementById("fullscreenBtn");
 
   fsBtn.addEventListener("click", () => {
@@ -515,5 +515,20 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error(`Không thể thoát toàn màn hình: ${err.message}`)
         );
     }
+  });
+
+  //------------- Hiển thị khi có ban phím
+  const observer = new MutationObserver(() => {
+    if (kbContainer.classList.contains("open")) {
+      document.body.classList.add("keyboard-open");
+    } else {
+      document.body.classList.remove("keyboard-open");
+    }
+  });
+
+  // Khởi tạo observer: theo dõi attribute class
+  observer.observe(kbContainer, {
+    attributes: true,
+    attributeFilter: ["class"],
   });
 });

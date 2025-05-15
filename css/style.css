@@ -7,18 +7,26 @@
 html,
 body {
   touch-action: pan-x pan-y;
+  overscroll-behavior-x: none;
 }
 * {
   box-sizing: border-box;
 }
 
+/* Đặt body thành một flex container */
 body {
-  position: relative;
-  font-family: Arial, sans-serif;
-  background-color: #6c9ff7 !important;
-  height: 50vh;
+  height: 100vh; /* Chiều cao trọn màn hình */
+  display: flex;
+  align-items: center; /* Căn dọc giữa */
+  justify-content: center; /* Căn ngang giữa */
+  margin: 0;
 }
 
+body.keyboard-open {
+  align-items: flex-start; /* Căn dọc lên trên */
+  padding-top: 2rem; /* Chừa khoảng trống phía trên */
+}
+/* Thẻ card (#page1, #page2) vẫn dùng width, padding, box-shadow như bạn có */
 #page1,
 #page2 {
   width: 100%;
@@ -26,6 +34,7 @@ body {
   padding: 1.5rem;
   border-radius: var(--radius);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: margin-top 0.2s ease;
 }
 
 .btn-nut {
