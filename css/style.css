@@ -176,16 +176,16 @@ input.blinking-cursor {
 /*--------------- Gợi ý chữ dấu*/
 
 .suggestions {
-  height: 50px;
+  height: 70px;
 }
 
 .suggestions button {
   background: #fff;
   border: 1px solid #b5b5b5;
-  padding: 10px 20px;
+  padding: 18px 25px;
   border-radius: 5px;
   box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.3);
-  margin-right: 5px;
+  margin-right: 7px;
 }
 
 .suggestions button:hover {
