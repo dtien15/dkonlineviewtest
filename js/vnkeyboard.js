@@ -271,8 +271,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Cập nhật style và hiển thị
         Object.assign(kbContainer.style, {
-          position: "fixed",
-          top: `${topPos}px`,
+          position: "",
+          bottom: 0,
           left: `${p.left}px`,
           width: `${p.width}px`,
           visibility: "visible",
@@ -457,8 +457,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       Object.assign(kbContainer.style, {
-        position: "fixed",
-        top: `${topPos}px`,
+        position: "",
+        bottom: 0,
         left: `${p.left}px`,
         width: `${p.width}px`,
       });

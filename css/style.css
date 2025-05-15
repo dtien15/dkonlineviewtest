@@ -16,16 +16,12 @@ body {
   position: relative;
   font-family: Arial, sans-serif;
   background-color: #6c9ff7 !important;
-  height: 100vh;
+  height: 50vh;
 }
 
 #page1,
 #page2 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
+  width: 100%;
   background: #fff;
   padding: 1.5rem;
   border-radius: var(--radius);
@@ -186,7 +182,7 @@ input.blinking-cursor {
 .suggestions button {
   background: #fff;
   border: 1px solid #b5b5b5;
-  padding: 10px 17px;
+  padding: 10px 20px;
   border-radius: 5px;
   box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.3);
   margin-right: 5px;
