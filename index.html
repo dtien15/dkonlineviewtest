@@ -17,15 +17,19 @@
     <!-- Trang chủ -->
     <div id="page1" class="card mx-auto">
       <div class="card-body text-center">
-        <button id="registerBtn" class="btn btn-success">Đăng ký</button>
-        <button id="revisitBtn" class="btn btn-info">Tái khám</button>
+        <button id="registerBtn" class="btn-nut btn-dangKy">
+          <div>ĐĂNG KÝ</div>
+        </button>
+        <button id="revisitBtn" class="btn-nut btn-taiKham">
+          <div>TÁI KHÁM</div>
+        </button>
       </div>
     </div>
 
     <!-- Trang quét/nhập QR -->
     <div id="page2" class="card mx-auto d-none">
       <div class="card-body">
-        <h2 id="formTitle" class="text-center mb-4">Quét mã QR</h2>
+        <h2 id="formTitle" class="text-center mb-4">NHẬP THÔNG TIN CÁ NHÂN</h2>
         <div class="mb-3">
           <label for="qrInput" class="form-label">Mã QR</label>
           <input
@@ -92,28 +96,26 @@
           <button type="submit" class="btn btn-primary">Lưu</button>
         </form>
       </div>
-
-      <!-- Modal idle timeout -->
-      <div id="idleModal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-body text-center">
-              <p>
-                Bạn vẫn đang tương tác chứ? Tự động quay lại sau
-                <span id="countdown" class="countdown">5</span> giây.
-              </p>
-              <button id="continueBtn" class="btn btn-success">Tiếp tục</button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- Bàn phím ảo -->
     <div id="keyboard" class="simple-keyboard">
       <div id="diacritic-suggestions" class="suggestions"></div>
     </div>
-
+    <!-- Modal idle timeout -->
+    <div id="idleModal" class="modal fade" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <p>
+              Bạn vẫn đang tương tác chứ? Tự động quay lại sau
+              <span id="countdown" class="countdown">5</span> giây.
+            </p>
+            <button id="continueBtn" class="btn btn-success">Tiếp tục</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Scripts -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"

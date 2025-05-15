@@ -13,8 +13,7 @@ body {
   position: relative;
   font-family: Arial, sans-serif;
   background-color: #6c9ff7 !important;
-  min-height: 100vh;
-  padding: 1rem;
+  height: 100vh;
 }
 
 #page1,
@@ -23,12 +22,129 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 800px;
-  max-width: 800px;
+  width: 70%;
   background: #fff;
   padding: 1.5rem;
   border-radius: var(--radius);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-nut {
+  width: fit-content;
+  display: inline-block;
+  padding: 30px 60px;
+  border-radius: 50px;
+  position: relative;
+  box-shadow: 2px 1px 4px #000;
+  border: none;
+  transition: 0.1s;
+  cursor: pointer;
+  margin: 15px;
+}
+
+.btn-nut div {
+  font-size: 60px;
+  transition: 0.1s;
+  color: #fff;
+  font-family: monospace, sans-serif;
+  font-weight: bold;
+}
+
+.btn-nut::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  transition: 0.1s;
+}
+
+.btn-nut::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+
+  transition: 0.1s;
+}
+
+.btn-dangKy::before {
+  box-shadow: inset 2px -5px 20px #400;
+}
+
+.btn-dangKy::after {
+  box-shadow: inset -2px 5px 20px #f99;
+}
+
+.btn-taiKham::before {
+  box-shadow: inset 2px -5px 20px rgb(1, 2, 80);
+}
+
+.btn-taiKham::after {
+  box-shadow: inset -2px 5px 20px rgb(57, 59, 186);
+}
+
+.btn-dangKy {
+  background-color: #f22;
+}
+
+.btn-taiKham {
+  background-color: blue;
+}
+
+/* Hover Button */
+.btn-nut:hover {
+  transform: scale(1.025);
+}
+
+/* Press Button */
+.btn-dangKy:active {
+  background-color: #d22;
+  transform: scale(1) !important;
+}
+
+.btn-dangKy:active div {
+  color: #ddd;
+  transform: scale(0.975);
+}
+
+.btn-dangKy:active::before {
+  box-shadow: inset 2px -5px 20px #f99;
+}
+
+.btn-dangKy:active::after {
+  box-shadow: inset -2px 5px 20px #400;
+}
+/* Press Button */
+.btn-taiKham:active {
+  background-color: rgb(78, 34, 221);
+  transform: scale(1) !important;
+}
+
+.btn-taiKham:active div {
+  color: #ddd;
+  transform: scale(0.975);
+}
+
+.btn-taiKham:active::before {
+  box-shadow: inset 2px -5px 20px rgb(19, 35, 174);
+}
+
+.btn-taiKham:active::after {
+  box-shadow: inset -2px 5px 20px rgb(46, 1, 1);
+}
+
+/*----------------- INput */
+input {
+  caret-color: transparent; /* ẩn hết */
+}
+input.blinking-cursor {
+  caret-color: black; /* bật caret cho input đang focus */
 }
 
 .blinking-cursor {
@@ -50,7 +166,7 @@ body {
   display: none;
   opacity: 0;
   transition: opacity 0.2s ease;
-  z-index: 999;
+  z-index: 10;
 }
 
 .simple-keyboard.open {
@@ -60,16 +176,16 @@ body {
 /*--------------- Gợi ý chữ dấu*/
 
 .suggestions {
-  height: 45px;
+  height: 50px;
 }
 
 .suggestions button {
   background: #fff;
   border: 1px solid #b5b5b5;
+  padding: 10px 17px;
   border-radius: 5px;
   box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.3);
   margin-right: 5px;
-  margin-bottom: 5px;
 }
 
 .suggestions button:hover {

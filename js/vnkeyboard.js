@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "1 2 3 4 5 6 7 8 9 0 {bksp}",
         "q w e r t y u i o p",
         "a s d f g h j k l {enter}",
-        "{shift} z x c v b n m {hide}", // chèn nút ở hàng cuối
-        "{lock} {space} {tab}",
+        "{shift} z x c v b n m / {hide}", // chèn nút ở hàng cuối
+        "@ .com {space} {tab}",
       ],
     },
     layoutName: "default",
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Idle-modal + timeout ---
   let idleTimer = null,
     isModalOpen = false;
-  const idleTimeout = 9000000,
+  const idleTimeout = 9000,
     page1 = document.getElementById("page1");
   const page2 = document.getElementById("page2");
   const idleModal = document.getElementById("idleModal");
@@ -272,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
           width: `${p.width}px`,
           visibility: "visible",
           display: "block",
-          zIndex: "9999",
+          zIndex: "",
         });
         kbContainer.classList.add("open");
 
@@ -287,37 +287,88 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Các phím khác: Backspace, Space, ký tự
-    const start = activeInput.selectionStart,
-      end = activeInput.selectionEnd;
+    const start = activeInput.selectionStart;
+    const end = activeInput.selectionEnd;
     let val = activeInput.value;
 
+    // --- Xử lý Backspace ---
     if (btn === "{bksp}") {
+      let newPos;
+      // Xóa một ký tự trước con trỏ hoặc vùng chọn
       if (start > 0 && start === end) {
         val = val.slice(0, start - 1) + val.slice(end);
-        activeInput.setSelectionRange(start - 1, start - 1);
+        newPos = start - 1;
       } else {
         val = val.slice(0, start) + val.slice(end);
-        activeInput.setSelectionRange(start, start);
+        newPos = start;
       }
-    } else if (btn === "{space}") {
+
+      // 1) Cập nhật giá trị
+      activeInput.value = val;
+      // 2) Gọi event input
+      activeInput.dispatchEvent(new Event("input", { bubbles: true }));
+      // 3) Đồng bộ với SimpleKeyboard
+      keyboard.setInput(val);
+      // 4) Restore focus + caret sau cùng
+      setTimeout(() => {
+        activeInput.focus();
+        activeInput.setSelectionRange(newPos, newPos);
+      }, 0);
+
+      kbContainer.classList.add("open");
+      return;
+    }
+
+    // --- Xử lý Phím cách ---
+    if (btn === "{space}") {
+      // 1) Tính value mới và vị trí mới
       val = val.slice(0, start) + " " + val.slice(end);
-      activeInput.setSelectionRange(start + 1, start + 1);
-    } else if (!btn.startsWith("{")) {
-      val = val.slice(0, start) + btn + val.slice(end);
-      activeInput.setSelectionRange(start + btn.length, start + btn.length);
+      const newPos = start + 1;
+
+      // 2) Cập nhật giá trị & event
       activeInput.value = val;
       activeInput.dispatchEvent(new Event("input", { bubbles: true }));
+      // 3) Đồng bộ keyboard
       keyboard.setInput(val);
-      activeInput.focus();
+      // 4) Restore caret
+      setTimeout(() => {
+        activeInput.focus();
+        activeInput.setSelectionRange(newPos, newPos);
+      }, 0);
+
+      kbContainer.classList.add("open");
+      return;
+    }
+
+    // --- Xử lý ký tự thường (chữ, số, dấu) ---
+    if (!btn.startsWith("{")) {
+      // 1) Tính value mới & vị trí caret
+      const newVal = val.slice(0, start) + btn + val.slice(end);
+      const newPos = start + btn.length;
+
+      // 2) Cập nhật value & dispatch event
+      activeInput.value = newVal;
+      activeInput.dispatchEvent(new Event("input", { bubbles: true }));
+      // 3) Đồng bộ với SimpleKeyboard
+      keyboard.setInput(newVal);
+
+      // 4) Restore focus + caret
+      setTimeout(() => {
+        activeInput.focus();
+        activeInput.setSelectionRange(newPos, newPos);
+      }, 0);
+
+      // 5) Hiển thị gợi ý dấu (nếu có)
       showDiacriticSuggestions(btn);
 
+      // 6) Nếu đang ở layout shift, chuyển về default
       if (keyboard.options.layoutName === "shift") {
         keyboard.setOptions({ layoutName: "default" });
-        kbContainer.classList.add("open"); // Đảm bảo vẫn hiện
+        kbContainer.classList.add("open");
       }
 
       return;
-    } else return;
+    }
 
     clearDiacriticSuggestions();
     activeInput.value = val;
