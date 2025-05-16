@@ -555,6 +555,7 @@ document.addEventListener("DOMContentLoaded", () => {
     placeholderValue: "Chọn dịch vụ...",
     searchPlaceholderValue: "Gõ để tìm…",
     shouldCloseOnSelect: false,
+    position: "top",
   });
 
   // Khi mở service dropdown
@@ -592,6 +593,7 @@ document.addEventListener("DOMContentLoaded", () => {
     placeholderValue: "Chọn giới tính...",
     searchPlaceholderValue: "Gõ để tìm…",
     shouldCloseOnSelect: false,
+    position: "top",
   });
 
   // Khi mở gender dropdown
