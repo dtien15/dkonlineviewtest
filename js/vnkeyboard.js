@@ -638,4 +638,99 @@ document.addEventListener("DOMContentLoaded", () => {
     event.stopPropagation();
     if (activeInput) activeInput.focus();
   });
+  ///////////////
+  const input = document.getElementById("dateInput");
+
+  // 1) Hàm format
+  function formatFn(date) {
+    const d = date.getDate().toString().padStart(2, "0");
+    const m = (date.getMonth() + 1).toString().padStart(2, "0");
+    const y = date.getFullYear();
+    return `${d}/${m}/${y}`;
+  }
+
+  // 2) Khởi tạo picker
+  const picker = TinyDatePicker("#dateInput", {
+    format: formatFn,
+    parse(str) {
+      const [d, m, y] = str.split("/").map(Number);
+      return new Date(y, m - 1, d);
+    },
+    lang: {
+      months: [
+        "Tháng 1",
+        "Tháng 2",
+        "Tháng 3",
+        "Tháng 4",
+        "Tháng 5",
+        "Tháng 6",
+        "Tháng 7",
+        "Tháng 8",
+        "Tháng 9",
+        "Tháng 10",
+        "Tháng 11",
+        "Tháng 12",
+      ],
+      weekdays: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
+    },
+    navTitles: {
+      days: (d) =>
+        `${
+          [
+            "Tháng 1",
+            "Tháng 2",
+            "Tháng 3",
+            "Tháng 4",
+            "Tháng 5",
+            "Tháng 6",
+            "Tháng 7",
+            "Tháng 8",
+            "Tháng 9",
+            "Tháng 10",
+            "Tháng 11",
+            "Tháng 12",
+          ][d.getMonth()]
+        } ${d.getFullYear()}`,
+    },
+    date: new Date(),
+    openOn: "focus",
+  });
+
+  // 3) Biến cờ chỉ chạy highlight lần đầu
+  let firstRun = true;
+
+  function highlightTodayOnce() {
+    if (!firstRun) return; // chỉ chạy lần đầu
+    firstRun = false;
+
+    const today = new Date();
+    // (a) reset input
+    input.value = formatFn(today);
+
+    // (b) thao tác trên popup
+    const root = document.querySelector(".tdp");
+    if (!root) return;
+
+    root
+      .querySelectorAll(".tdp__day--selected")
+      .forEach((el) => el.classList.remove("tdp__day--selected"));
+
+    root.querySelectorAll(".tdp__days li").forEach((li) => {
+      if (+li.textContent === today.getDate()) {
+        li.classList.add("tdp__day--selected");
+      }
+    });
+  }
+
+  // 4) Chạy ngay sau init
+  highlightTodayOnce();
+
+  // 5) Hook vào open để if firstRun thì highlight
+  picker.on("open", highlightTodayOnce);
+
+  // 6) Khi user chọn ngày, input.value đã được set, và
+  //    vì firstRun=false thì không còn ép về hôm nay nữa
+  picker.on("date", ({ date }) => {
+    console.log("User chọn:", formatFn(date));
+  });
 });

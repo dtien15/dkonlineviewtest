@@ -15,6 +15,13 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tiny-date-picker/3.2.0/tiny-date-picker.min.css"
+      integrity="sha512-GX1pvVnXNYhna2E0kzzepxYJwzn72Mpa2cgcxPsRAAduWlUl3/z26Q6fDOWpKJIHSYw8eHTQZPzkY45cWu8Rcw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="./lib/keyboard/index.css" />
   </head>
   <body>
@@ -44,14 +51,13 @@
     <!-- Trang quét/nhập QR -->
     <div id="page2" class="card mx-auto d-none">
       <div class="card-body">
-        <h1 class="text-center mb-0">NHẬP THÔNG TIN</h1>
+        <h1 class="text-center mb-4">NHẬP THÔNG TIN CÁ NHÂN</h1>
         <div class="mb-3">
-          <label for="qrInput" class="form-label">Mã QR</label>
           <input
             type="text"
             id="qrInput"
             class="form-control"
-            placeholder="Quét hoặc nhập mã QR và ấn Enter"
+            placeholder="Quét mã QR"
             autocomplete="off"
           />
         </div>
@@ -59,7 +65,6 @@
         <form id="patientForm">
           <div class="row">
             <div class="mb-3 col-6">
-              <label for="nameInput" class="form-label">Họ tên</label>
               <input
                 type="text"
                 id="nameInput"
@@ -70,23 +75,36 @@
               />
             </div>
             <div class="mb-3 col-6">
-              <label for="ageInput" class="form-label">Tuổi</label>
-              <input
-                type="text"
-                id="ageInput"
-                inputmode="numeric"
-                pattern="\d*"
-                data-vnkeys
-                class="form-control"
-                placeholder="Nhập tuổi"
-                autocomplete="off"
-              />
+              <div class="row">
+                <div class="col-6">
+                  <input
+                    type="text"
+                    id="ageInput"
+                    inputmode="numeric"
+                    pattern="\d*"
+                    data-vnkeys
+                    class="form-control"
+                    placeholder="Nhập tuổi"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="col-6">
+                  <div class="date-picker-container">
+                    <input
+                      type="text"
+                      id="dateInput"
+                      class="form-control"
+                      placeholder="dd/mm/yyyy"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="row">
             <div class="mb-3 col-6">
-              <label for="idInput" class="form-label">Mã bệnh nhân</label>
               <input
                 type="text"
                 id="idInput"
@@ -98,7 +116,6 @@
             </div>
 
             <div class="mb-3 col-6">
-              <label for="addressInput" class="form-label">Địa chỉ</label>
               <input
                 type="text"
                 id="addressInput"
@@ -109,23 +126,27 @@
               />
             </div>
           </div>
+          <div class="row">
+            <div class="col-6">
+              <select id="serviceSelect" placeholder="Chọn dịch vụ...">
+                <option value="">-- Chọn dịch vụ --</option>
+                <option value="thai-do">Thai đồ</option>
+                <option value="chan-doan">Chẩn đoán hình ảnh</option>
+                <option value="xet-nghiem">Xét nghiệm tổng quát</option>
+                <option value="kham-tong-quat">Khám tổng quát</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <select id="genderSelect" placeholder="Chọn giới tính...">
+                <option value="">-- Chọn giới tính --</option>
+                <option value="nam">Nam</option>
+                <option value="nu">Nữ</option>
+                <option value="khac">Khác</option>
+              </select>
+            </div>
+          </div>
 
-          <select id="serviceSelect" placeholder="Chọn dịch vụ...">
-            <option value="">-- Chọn dịch vụ --</option>
-            <option value="thai-do">Thai đồ</option>
-            <option value="chan-doan">Chẩn đoán hình ảnh</option>
-            <option value="xet-nghiem">Xét nghiệm tổng quát</option>
-            <option value="kham-tong-quat">Khám tổng quát</option>
-          </select>
-
-          <select id="genderSelect" placeholder="Chọn giới tính...">
-            <option value="">-- Chọn giới tính --</option>
-            <option value="nam">Nam</option>
-            <option value="nu">Nữ</option>
-            <option value="khac">Khác</option>
-          </select>
-
-          <button type="submit" class="btn btn-primary">Lưu</button>
+          <button type="submit" class="btn btn-primary mt-3">Lưu</button>
         </form>
       </div>
     </div>
@@ -154,11 +175,17 @@
       integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
       crossorigin="anonymous"
     ></script>
-
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tiny-date-picker/3.2.0/tiny-date-picker.min.js"
+      integrity="sha512-QqiSuf3ZSPAgg/HiG4ppk0KnzDmXGYj5OlwDaKTuZdRokMBGPFV05P4bmYDVpUaxSw8jZflipfvPQtJOxVWswg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <!-- Choices.js JS -->
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="./lib/keyboard/VNKeys.js"></script>
     <script src="./lib/keyboard/index.min.js"></script>
+
     <script src="./js/vnkeyboard.js"></script>
   </body>
 </html>
