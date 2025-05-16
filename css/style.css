@@ -185,21 +185,26 @@ input.blinking-cursor {
 /*--------------- Gợi ý chữ dấu*/
 
 .suggestions {
-  height: 70px;
+  height: 76px;
 }
 
 .suggestions button {
   background: #fff;
   border: 1px solid #b5b5b5;
-  padding: 18px 25px;
+  padding: 12px 23px;
   border-radius: 5px;
   box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.3);
   margin-right: 7px;
+  font-size: 30px;
 }
 
 .suggestions button:hover {
   background: #fff;
   border: 1px solid #b5b5b5;
+}
+
+.hg-standardBtn span {
+  font-size: 30px;
 }
 
 /*--------------- Màu ô bàn phím*/
@@ -283,15 +288,12 @@ input.blinking-cursor {
   color: #ffffff;
 }
 
-.hg-button.hg-standardBtn[data-skbtn^="`"],
-.hg-button.hg-standardBtn[data-skbtn^="-"],
 .hg-button.hg-standardBtn[data-skbtn^="="],
 .hg-button.hg-standardBtn[data-skbtn^="["],
 .hg-button.hg-standardBtn[data-skbtn^="]"],
 .hg-button.hg-standardBtn[data-skbtn^="\\"],
 .hg-button.hg-standardBtn[data-skbtn^=";"],
 .hg-button.hg-standardBtn[data-skbtn^="'"],
-.hg-button.hg-standardBtn[data-skbtn^=","],
 .hg-button.hg-button-tab[data-skbtn="{tab}"],
 .hg-button.hg-button-shift[data-skbtn="{shift}"],
 .hg-button.hg-button-lock[data-skbtn="{lock}"] {
