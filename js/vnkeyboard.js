@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Khởi tạo VNKeys + simple-keyboard ---
   VNKeys.setMethod("auto");
   const kbContainer = document.querySelector(".simple-keyboard");
+  kbContainer.addEventListener("mousedown", (e) => e.preventDefault());
+  kbContainer.addEventListener("touchstart", (e) => e.preventDefault());
+
   const keyboard = new SimpleKeyboard.default({
     rootElement: kbContainer,
     onKeyPress: (btn) => handleKeyPress(btn),
@@ -347,29 +350,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Xử lý ký tự thường (chữ, số, dấu) ---
     if (!btn.startsWith("{")) {
-      // 1) Tính value mới & vị trí caret
       const newVal = val.slice(0, start) + btn + val.slice(end);
       const newPos = start + btn.length;
 
-      // 2) Cập nhật value & dispatch event
       activeInput.value = newVal;
       activeInput.dispatchEvent(new Event("input", { bubbles: true }));
-      // 3) Đồng bộ với SimpleKeyboard
       keyboard.setInput(newVal);
 
-      // 4) Restore focus + caret
       setTimeout(() => {
         activeInput.focus();
         activeInput.setSelectionRange(newPos, newPos);
       }, 0);
 
-      // 5) Hiển thị gợi ý dấu (nếu có)
       showDiacriticSuggestions(btn);
 
-      // 6) Nếu đang ở layout shift, chuyển về default
       if (keyboard.options.layoutName === "shift") {
         keyboard.setOptions({ layoutName: "default" });
         kbContainer.classList.add("open");
+      }
+
+      // --- Mở lại đúng dropdown dựa trên class ---
+      if (activeInput.classList.contains("choices__input--cloned")) {
+        if (activeInput.classList.contains("service-input")) {
+          if (!serviceChoices.dropdown.isActive) {
+            serviceChoices.showDropdown();
+          }
+        } else if (activeInput.classList.contains("gender-input")) {
+          if (!genderChoices.dropdown.isActive) {
+            genderChoices.showDropdown();
+          }
+        }
       }
 
       return;
@@ -530,5 +540,91 @@ document.addEventListener("DOMContentLoaded", () => {
   observer.observe(kbContainer, {
     attributes: true,
     attributeFilter: ["class"],
+  });
+  //-----------Select
+  function clearIdentifierClasses() {
+    document
+      .querySelectorAll(".service-input, .gender-input")
+      .forEach((i) => i.classList.remove("service-input", "gender-input"));
+  }
+
+  // --- serviceSelect ---
+  const serviceEl = document.getElementById("serviceSelect");
+  const serviceChoices = new Choices(serviceEl, {
+    searchEnabled: true,
+    placeholderValue: "Chọn dịch vụ...",
+    searchPlaceholderValue: "Gõ để tìm…",
+    shouldCloseOnSelect: false,
+  });
+
+  // Khi mở service dropdown
+  serviceEl.addEventListener("showDropdown", () => {
+    clearIdentifierClasses();
+    const wrapper = serviceEl.closest(".choices");
+    const inp = wrapper.querySelector(".choices__input--cloned");
+    if (!inp) return;
+    inp.classList.add("service-input");
+    inp.setAttribute("data-vnkeys", "");
+    activeInput = inp;
+    keyboard.setInput(inp.value);
+    inp.focus();
+
+    // … vị trí keyboard …
+    const rect = document.getElementById("page2").getBoundingClientRect();
+    Object.assign(kbContainer.style, {
+      position: "fixed",
+      bottom: "0px",
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      visibility: "visible",
+      display: "block",
+    });
+    kbContainer.classList.add("open");
+  });
+
+  // Khi đóng service dropdown
+  serviceEl.addEventListener("hideDropdown", clearIdentifierClasses);
+
+  // --- genderSelect ---
+  const genderEl = document.getElementById("genderSelect");
+  const genderChoices = new Choices(genderEl, {
+    searchEnabled: true,
+    placeholderValue: "Chọn giới tính...",
+    searchPlaceholderValue: "Gõ để tìm…",
+    shouldCloseOnSelect: false,
+  });
+
+  // Khi mở gender dropdown
+  genderEl.addEventListener("showDropdown", () => {
+    clearIdentifierClasses();
+    const wrapper = genderEl.closest(".choices");
+    const inp = wrapper.querySelector(".choices__input--cloned");
+    if (!inp) return;
+    inp.classList.add("gender-input");
+    inp.setAttribute("data-vnkeys", "");
+    activeInput = inp;
+    keyboard.setInput(inp.value);
+    inp.focus();
+
+    // … vị trí keyboard …
+    const rect = document.getElementById("page2").getBoundingClientRect();
+    Object.assign(kbContainer.style, {
+      position: "fixed",
+      bottom: "0px",
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      visibility: "visible",
+      display: "block",
+    });
+    kbContainer.classList.add("open");
+  });
+
+  // Khi đóng gender dropdown
+  genderEl.addEventListener("hideDropdown", clearIdentifierClasses);
+
+  // --- Giữ dropdown khi click keyboard ---
+  kbContainer.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (activeInput) activeInput.focus();
   });
 });

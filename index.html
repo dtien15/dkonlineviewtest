@@ -11,6 +11,10 @@
       integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+    />
     <link rel="stylesheet" href="./lib/keyboard/index.css" />
   </head>
   <body>
@@ -106,6 +110,21 @@
             </div>
           </div>
 
+          <select id="serviceSelect" placeholder="Chọn dịch vụ...">
+            <option value="">-- Chọn dịch vụ --</option>
+            <option value="thai-do">Thai đồ</option>
+            <option value="chan-doan">Chẩn đoán hình ảnh</option>
+            <option value="xet-nghiem">Xét nghiệm tổng quát</option>
+            <option value="kham-tong-quat">Khám tổng quát</option>
+          </select>
+
+          <select id="genderSelect" placeholder="Chọn giới tính...">
+            <option value="">-- Chọn giới tính --</option>
+            <option value="nam">Nam</option>
+            <option value="nu">Nữ</option>
+            <option value="khac">Khác</option>
+          </select>
+
           <button type="submit" class="btn btn-primary">Lưu</button>
         </form>
       </div>
@@ -136,6 +155,8 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-- Choices.js JS -->
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="./lib/keyboard/VNKeys.js"></script>
     <script src="./lib/keyboard/index.min.js"></script>
     <script src="./js/vnkeyboard.js"></script>
