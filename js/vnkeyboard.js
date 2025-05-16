@@ -2,8 +2,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Khởi tạo VNKeys + simple-keyboard ---
   VNKeys.setMethod("auto");
   const kbContainer = document.querySelector(".simple-keyboard");
-  kbContainer.addEventListener("mousedown", (e) => e.preventDefault());
-  kbContainer.addEventListener("touchstart", (e) => e.preventDefault());
+  // Giữ keyboard mở khi click chuột
+  kbContainer.addEventListener("mousedown", (e) => {
+    e.preventDefault(); // ngăn blur/focus
+    e.stopPropagation();
+  });
+
+  // Giữ keyboard mở khi tap trên màn hình cảm ứng
+  kbContainer.addEventListener("touchstart", (e) => {
+    // chỉ ngăn propagation để touch không coi là click ngoài
+    e.stopPropagation();
+  });
 
   const keyboard = new SimpleKeyboard.default({
     rootElement: kbContainer,
