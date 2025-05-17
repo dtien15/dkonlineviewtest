@@ -52,7 +52,7 @@ body.keyboard-open {
 }
 
 #page2 {
-  width: 95%;
+  width: 100%;
   background: #5760b2;
   padding: 1.5rem;
   border-radius: var(--radius);
@@ -239,7 +239,7 @@ input.blinking-cursor {
 .suggestions button {
   background: #fff;
   border: 1px solid #b5b5b5;
-  padding: 8px 27px;
+  padding: 8px 20px;
   border-radius: 5px;
   box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.3);
   margin-right: 7px;
