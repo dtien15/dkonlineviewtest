@@ -4,172 +4,220 @@
   --radius: 5px;
   --transition: 0.2s ease;
 }
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   touch-action: pan-x pan-y;
   overscroll-behavior-x: none;
 }
-* {
-  box-sizing: border-box;
+
+.dp-clear {
+  display: none !important;
 }
 
-/* Đặt body thành một flex container */
 body {
-  height: 100vh; /* Chiều cao trọn màn hình */
+  height: 100vh;
   display: flex;
-  align-items: center; /* Căn dọc giữa */
-  justify-content: center; /* Căn ngang giữa */
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5 !important;
   margin: 0;
 }
 
-body.keyboard-open {
-  align-items: flex-start; /* Căn dọc lên trên */
-  padding-top: 2rem; /* Chừa khoảng trống phía trên */
+/* hide the page title while the keyboard is open */
+body.keyboard-open #page2 > h2.text-heading {
+  display: none;
 }
-/* Thẻ card (#page1, #page2) vẫn dùng width, padding, box-shadow như bạn có */
-#page1,
+
+body.keyboard-open {
+  align-items: flex-start;
+  padding-top: 10px;
+}
+
+.form-control {
+  padding: 6px 23px !important;
+  height: 70px;
+  border: 1px solid #ffffff !important;
+  font-size: 1.5rem !important;
+  border-radius: 30px !important;
+}
+
+/* ============== Giao diện đăng ký =============== */
+#page1 {
+  width: 95%;
+  background: transparent !important;
+}
+
 #page2 {
-  width: 100%;
-  background: #fff;
+  width: 95%;
+  background: #5760b2;
   padding: 1.5rem;
   border-radius: var(--radius);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: margin-top 0.2s ease;
 }
 
-.btn-nut {
-  width: fit-content;
+
+.text-heading {
+  text-transform: uppercase;
+  font-size: clamp(32px, 5vw, 80px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin: clamp(16px, 2vw, 32px) 0 clamp(24px, 3vw, 48px) 0;
   display: inline-block;
-  padding: 30px 60px;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+}
+
+/* ============== Giao diện nút đăng ký =============== */
+.btn-nut {
+  display: inline-block;
+  width: 450px;
+  padding: 60px 0px;
+  margin: 0 3%;
+  border: none;
   border-radius: 50px;
   position: relative;
   box-shadow: 2px 1px 4px #000;
-  border: none;
-  transition: 0.1s;
+  background-color: #888;
   cursor: pointer;
-  margin: 15px;
-  width: 400px;
+  transition: transform 0.1s, background-color 0.1s;
 }
 
-.btn-nut div {
+.btn-nut > div {
   font-size: 60px;
-  transition: 0.1s;
-  color: #fff;
-  font-family: monospace, sans-serif;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
   font-weight: bold;
+  color: #fff;
+  transition: transform 0.1s, color 0.1s;
 }
 
-.btn-nut::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50px;
-  transition: 0.1s;
-}
-
-.btn-nut::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50px;
-
-  transition: 0.1s;
-}
-
-.btn-dangKy::before {
-  box-shadow: inset 2px -5px 20px #400;
-}
-
-.btn-dangKy::after {
-  box-shadow: inset -2px 5px 20px #f99;
-}
-
-.btn-taiKham::before {
-  box-shadow: inset 2px -5px 20px rgb(1, 2, 80);
-}
-
-.btn-taiKham::after {
-  box-shadow: inset -2px 5px 20px rgb(57, 59, 186);
-}
-
-.btn-dangKy {
-  background-color: #f22;
-}
-
-.btn-taiKham {
-  background-color: blue;
-}
-
-/* Hover Button */
 .btn-nut:hover {
   transform: scale(1.025);
 }
 
-/* Press Button */
+.btn-nut::before,
+.btn-nut::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transition: box-shadow 0.1s;
+  pointer-events: none;
+}
+
+.btn-nut:active {
+  transform: scale(1) !important;
+}
+
+.btn-nut:active > div {
+  transform: scale(0.975);
+  color: #ddd;
+}
+
+.btn-dangKy {
+  background-color: #4caf50;
+}
+
+.btn-dangKy::before {
+  box-shadow: inset 2px -5px 20px #2e7d32;
+}
+
+.btn-dangKy::after {
+  box-shadow: inset -2px 5px 20px #a5d6a7; 
+}
+
 .btn-dangKy:active {
-  background-color: #d22;
-  transform: scale(1) !important;
+  background-color: #388e3c;
 }
-
-.btn-dangKy:active div {
-  color: #ddd;
-  transform: scale(0.975);
-}
-
 .btn-dangKy:active::before {
-  box-shadow: inset 2px -5px 20px #f99;
+  box-shadow: inset 2px -5px 20px #a5d6a7; 
 }
-
 .btn-dangKy:active::after {
-  box-shadow: inset -2px 5px 20px #400;
-}
-/* Press Button */
-.btn-taiKham:active {
-  background-color: rgb(78, 34, 221);
-  transform: scale(1) !important;
+  box-shadow: inset -2px 5px 20px #2e7d32; /
 }
 
-.btn-taiKham:active div {
-  color: #ddd;
-  transform: scale(0.975);
+.btn-taiKham {
+  background-color: #ff9800; 
+}
+
+.btn-taiKham::before {
+  box-shadow: inset 2px -5px 20px #ef6c00; 
+}
+
+.btn-taiKham::after {
+  box-shadow: inset -2px 5px 20px #ffb74d;
+}
+
+.btn-taiKham:active {
+  background-color: #fb8c00;
 }
 
 .btn-taiKham:active::before {
-  box-shadow: inset 2px -5px 20px rgb(199, 199, 253);
+  box-shadow: inset 2px -5px 20px #ffcc80; 
 }
 
 .btn-taiKham:active::after {
-  box-shadow: inset -2px 5px 20px rgb(51, 51, 57);
+  box-shadow: inset -2px 5px 20px #ef6c00;
 }
 
-/*----------------- INput */
+.btn-luu {
+  background-color: #009688; /* Màu xanh lá tươi */
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+  min-width: 400px;
+  margin-top: 20px;
+}
+
+.btn-luu:hover {
+  background-color: #04b4a2; 
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.btn-luu:active {
+  background-color: #04b4a2; 
+  transform: scale(0.98);
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* ============== Form đăng ký =============== */
 input {
-  caret-color: transparent; /* ẩn hết */
+  caret-color: transparent;
 }
 input.blinking-cursor {
-  caret-color: black; /* bật caret cho input đang focus */
+  caret-color: black;
 }
 
 .blinking-cursor {
   animation: blink 1s step-end infinite;
+  border-radius: 30px;
 }
 
 @keyframes blink {
   50% {
-    box-shadow: 0 0 0 3px rgba(51, 102, 255, 0.3);
+    box-shadow: 0 0 0 3px rgb(194, 9, 9);
   }
   100% {
-    box-shadow: 0 0 0 3px rgba(51, 102, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(255, 4, 4, 0.759);
   }
 }
 
-/*--------------- Bàn phím ảo */
+/* ============== Bàn phím ảo =============== */
 .simple-keyboard {
   position: fixed;
   display: none;
@@ -185,13 +233,13 @@ input.blinking-cursor {
 /*--------------- Gợi ý chữ dấu*/
 
 .suggestions {
-  height: 76px;
+  height: 69px;
 }
 
 .suggestions button {
   background: #fff;
   border: 1px solid #b5b5b5;
-  padding: 12px 23px;
+  padding: 8px 27px;
   border-radius: 5px;
   box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.3);
   margin-right: 7px;
@@ -289,13 +337,97 @@ input.blinking-cursor {
 }
 
 .hg-button.hg-standardBtn[data-skbtn^="="],
-.hg-button.hg-standardBtn[data-skbtn^="["],
-.hg-button.hg-standardBtn[data-skbtn^="]"],
-.hg-button.hg-standardBtn[data-skbtn^="\\"],
-.hg-button.hg-standardBtn[data-skbtn^=";"],
 .hg-button.hg-standardBtn[data-skbtn^="'"],
-.hg-button.hg-button-tab[data-skbtn="{tab}"],
 .hg-button.hg-button-shift[data-skbtn="{shift}"],
 .hg-button.hg-button-lock[data-skbtn="{lock}"] {
   display: none;
+}
+
+/* 1. Container tổng cho dropdown */
+#serviceSelect + .choices {
+  width: 100%; /* chiếm đầy chiều ngang cha */
+  max-width: 400px; /* giới hạn tối đa */
+  margin: 1rem 0; /* khoảng cách trên/dưới */
+  font-family: Arial, sans-serif;
+}
+
+
+.choices__inner {
+  border: 1px solid #ccc !important; 
+  border-radius: 30px !important; 
+  font-size: 1rem !important; 
+  line-height: 1.5 !important; 
+  background-color: #fff !important; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  transition: border-color 0.2s !important;
+}
+
+/* 3. Hover / Focus state */
+.choices__inner:hover,
+.choices__inner.is-focused {
+  border-color: #7aa7ff;
+  box-shadow: 0 4px 8px rgba(122, 167, 255, 0.2);
+}
+
+/* 4. Placeholder */
+.choices__placeholder {
+  color: #595c5f !important;
+  opacity: 1 !important;
+}
+
+/* 5. Danh sách option xổ xuống */
+.choices__list--dropdown {
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 200px !important;
+  overflow-y: auto !important;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.choices__item--choice {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.choices__item--choice.is-highlighted {
+  background-color: #f0f4ff;
+}
+
+.choices__item--selectable {
+  border-radius: 0.25rem;
+  margin: 0.25rem 0.125rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.choices__button {
+  margin-left: 0.25rem;
+  color: #555;
+}
+
+.choices__list--dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.choices__list--dropdown::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.choices__item {
+  font-size: 20px;
+}
+
+
+.choices[data-type*=select-one] .choices__input {
+   font-size: 20px !important;
+}
+
+.choices__list--dropdown .choices__item, .choices__list[aria-expanded] .choices__item {
+    font-size: 20px !important;
+}
+
+.choices__list--dropdown, .choices__list[aria-expanded] {
+    border-radius: 20px !important;
 }

@@ -29,10 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
     layout: {
       default: [
         "` 1 2 3 4 5 6 7 8 9 0 - {bksp}",
-        "q w e r t y u i o p",
-        "a s d f g h j k l {enter}",
+        "q w e r t y u i o p [ ] \\",
+        "a s d f g h j k l ; {enter}",
         "{shift} z x c v b n m , . / {hide}", // chèn nút ở hàng cuối
-        "@ .com {space} {tab}",
+        "@ {space} .com",
       ],
     },
     layoutName: "default",
@@ -537,19 +537,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   //------------- Hiển thị khi có ban phím
+  const heading = document.querySelector(".text-wrap >  h2.text-heading");
+
   const observer = new MutationObserver(() => {
-    if (kbContainer.classList.contains("open")) {
-      document.body.classList.add("keyboard-open");
-    } else {
-      document.body.classList.remove("keyboard-open");
-    }
+    const isOpen = kbContainer.classList.contains("open");
+    document.body.classList.toggle("keyboard-open", isOpen);
+    heading.style.display = isOpen ? "none" : "";
   });
 
-  // Khởi tạo observer: theo dõi attribute class
   observer.observe(kbContainer, {
     attributes: true,
     attributeFilter: ["class"],
   });
+
   //-----------Select
   function clearIdentifierClasses() {
     document
@@ -561,8 +561,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const serviceEl = document.getElementById("serviceSelect");
   const serviceChoices = new Choices(serviceEl, {
     searchEnabled: true,
-    placeholderValue: "Chọn dịch vụ...",
-    searchPlaceholderValue: "Gõ để tìm…",
+    placeholderValue: "--- Chọn dịch vụ ---",
+    searchPlaceholderValue: "--- Gõ để tìm ---",
     shouldCloseOnSelect: false,
     position: "top",
   });
@@ -599,8 +599,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const genderEl = document.getElementById("genderSelect");
   const genderChoices = new Choices(genderEl, {
     searchEnabled: true,
-    placeholderValue: "Chọn giới tính...",
-    searchPlaceholderValue: "Gõ để tìm…",
+    placeholderValue: "--- Chọn giới tính ---",
+    searchPlaceholderValue: "--- Gõ để tìm ---",
     shouldCloseOnSelect: false,
     position: "top",
   });
@@ -638,7 +638,7 @@ document.addEventListener("DOMContentLoaded", () => {
     event.stopPropagation();
     if (activeInput) activeInput.focus();
   });
-  ///////////////
+  //--------------------Ô input
   const input = document.getElementById("dateInput");
 
   // 1) Hàm format
