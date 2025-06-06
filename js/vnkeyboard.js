@@ -445,6 +445,50 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("diacritic-suggestions").innerHTML = "";
   }
 
+  // 1) Khi một ô VNKeys mất focus, luôn xóa lớp blinking-cursor
+  document.querySelectorAll("input[data-vnkeys]").forEach((inp) => {
+    inp.addEventListener("blur", () => {
+      inp.classList.remove("blinking-cursor");
+    });
+  });
+  /////////////////////
+  // 1) Khi user focus vào bất cứ phần tử nào mà KHÔNG phải input[data-vnkeys] hoặc #qrInput,
+  //    thì xóa blinking-cursor ở tất cả các ô VNKeys + qrInput
+  document.addEventListener("focusin", (e) => {
+    if (!e.target.matches("input[data-vnkeys], #qrInput")) {
+      document
+        .querySelectorAll(
+          "input[data-vnkeys].blinking-cursor, #qrInput.blinking-cursor"
+        )
+        .forEach((i) => i.classList.remove("blinking-cursor"));
+    }
+  });
+
+  // 2) Khi focus vào qrInput
+  const qrInput = document.getElementById("qrInput");
+  qrInput.addEventListener("focus", () => {
+    // Xóa hết blinking-cursor cũ trên VNKeys và qrInput (nếu còn)
+    document
+      .querySelectorAll(
+        "input[data-vnkeys].blinking-cursor, #qrInput.blinking-cursor"
+      )
+      .forEach((i) => i.classList.remove("blinking-cursor"));
+
+    // Thêm blinking-cursor cho qrInput
+    qrInput.classList.add("blinking-cursor");
+
+    // Cập nhật activeInput & đồng bộ keyboard nếu cần
+    activeInput = qrInput;
+    keyboard.setInput(qrInput.value);
+  });
+
+  // 3) (Tùy chọn) Khi qrInput mất focus cũng xóa blinking-cursor
+  qrInput.addEventListener("blur", () => {
+    qrInput.classList.remove("blinking-cursor");
+  });
+
+  //////////////////////
+
   // --- Khi input focus ---
   document.querySelectorAll("input[data-vnkeys]").forEach((inp) => {
     inp.addEventListener("focus", () => {
