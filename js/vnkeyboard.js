@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Idle-modal + timeout ---
   let idleTimer = null,
     isModalOpen = false;
-  const idleTimeout = 90000000,
+  const idleTimeout = 9000,
     page1 = document.getElementById("page1");
   const page2 = document.getElementById("page2");
   const pageQR = document.getElementById("pageQR");
@@ -114,24 +114,39 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showIdleModal() {
-    if (page2.classList.contains("d-none") || isModalOpen) return;
+    const allPagesHidden =
+      pageQR.classList.contains("d-none") &&
+      page2.classList.contains("d-none") &&
+      pageDichVu.classList.contains("d-none") &&
+      pageXacNhan.classList.contains("d-none");
+
+    if (allPagesHidden || isModalOpen) return;
+
     const modal = new bootstrap.Modal(idleModal);
     modal.show();
     isModalOpen = true;
+
     let count = 5;
     countdownEl.textContent = count;
+
     const iv = setInterval(() => {
       if (--count <= 0) {
         clearInterval(iv);
         modal.hide();
+        // Tùy bạn chọn page nào là mặc định, ví dụ page1:
+        pageQR.classList.add("d-none");
         page2.classList.add("d-none");
+        pageDichVu.classList.add("d-none");
+        pageXacNhan.classList.add("d-none");
         page1.classList.remove("d-none");
         kbContainer.classList.remove("open");
         activeInput = null;
         isModalOpen = false;
         clearPage2Inputs();
         resetIdleTimer();
-      } else countdownEl.textContent = count;
+      } else {
+        countdownEl.textContent = count;
+      }
     }, 1000);
 
     continueBtn.onclick = () => {
@@ -140,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
       isModalOpen = false;
       resetIdleTimer();
     };
+
     idleModal.addEventListener(
       "hidden.bs.modal",
       () => {
@@ -152,7 +168,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function resetIdleTimer() {
     clearTimeout(idleTimer);
-    if (!page2.classList.contains("d-none") && !isModalOpen) {
+    const somePageVisible =
+      !pageQR.classList.contains("d-none") ||
+      !page2.classList.contains("d-none") ||
+      !pageDichVu.classList.contains("d-none") ||
+      !pageXacNhan.classList.contains("d-none");
+
+    if (somePageVisible && !isModalOpen) {
       idleTimer = setTimeout(showIdleModal, idleTimeout);
     }
   }
