@@ -690,9 +690,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load data from JSON
   async function loadData() {
-    tinhData = await fetch("/json/DM_TinhCuTru.json").then((res) => res.json());
-    quanData = await fetch("/json/DM_QuanCuTru.json").then((res) => res.json());
-    xaData = await fetch("/json/DM_XaCuTru.json").then((res) => res.json());
+    tinhData = await fetch("./json/DM_TinhCuTru.json").then((res) =>
+      res.json()
+    );
+    quanData = await fetch("./json/DM_QuanCuTru.json").then((res) =>
+      res.json()
+    );
+    xaData = await fetch("./json/DM_XaCuTru.json").then((res) => res.json());
 
     tinhChoices.setChoices(
       tinhData.map((t) => ({ value: t.id, label: t.ten })),
