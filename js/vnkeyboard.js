@@ -581,6 +581,12 @@ document.addEventListener("DOMContentLoaded", () => {
     clearPage2Inputs();
   });
 
+  document.getElementById("veTrangChinhBtn").addEventListener("click", () => {
+    pageXacNhan.classList.add("d-none");
+    page1.classList.remove("d-none");
+    clearPage2Inputs();
+  });
+
   //-----------------Viết hoa chữ cái đầu mỗi từ cho Họ tên
   const nameInput = document.getElementById("nameInput");
   nameInput.addEventListener("input", (e) => {

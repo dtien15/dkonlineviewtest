@@ -59,7 +59,7 @@ body.keyboard-open {
 }
 .left-ad,
 .right-ad {
-  width: 200px;
+  width: 150px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -310,7 +310,7 @@ input.blinking-cursor {
 .suggestions button {
   background: #fff;
   border: 1px solid #b5b5b5;
-  padding: 8px 20px;
+  padding: 8px 15px;
   border-radius: 5px;
   box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.3);
   margin-right: 7px;
