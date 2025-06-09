@@ -25,131 +25,303 @@
     <link rel="stylesheet" href="./lib/keyboard/index.css" />
   </head>
   <body>
-    <!-- Trang chủ -->
-    <div id="page1" class="">
-      <div class="card-body text-center">
-        <button id="registerBtn" class="btn-nut btn-dangKy">
-          <div>ĐĂNG KÝ</div>
-        </button>
-        <button id="revisitBtn" class="btn-nut btn-taiKham">
-          <div>TÁI KHÁM</div>
-        </button>
-      </div>
-      <button
-        style="
-          position: absolute;
-          top: 0;
-          right: 0;
-          padding: 20px 50px;
-          border: none;
-          background: transparent;
-        "
-        id="fullscreenBtn"
-      ></button>
-    </div>
-
-    <!-- Trang quét/nhập QR -->
-    <div id="page2" class="d-none">
-      <div class="text-center text-wrap">
-        <h2 class="text-heading">Đăng ký khám bệnh</h2>
+    <div class="dk-container">
+      <div class="left-ad">
+        <img src="/img/1.png" alt="Girl in a jacket" style="height: 100vh" />
       </div>
 
-      <div class="card-body">
-        <div class="mb-4">
-          <input
-            type="text"
-            id="qrInput"
-            class="form-control"
-            placeholder="Quét mã QR"
-            autocomplete="off"
-          />
+      <div class="main-content">
+        <!-- Trang chủ -->
+        <div id="page1" class="">
+          <div class="">
+            <div class="text-heading">ĐĂNG KÝ KHÁM BỆNH</div>
+            <div class="des">VUI LÒNG CHỌN DỊCH VỤ MUỐN KHÁM</div>
+          </div>
+          <div class="card-body">
+            <button
+              id="registerBtn"
+              href="/pageNhaptt.html"
+              class="btn-nut btn-dangKy"
+            >
+              <div>KHÁM BẢO HIỂM Y TẾ</div>
+            </button>
+            <button id="revisitBtn" class="btn-nut btn-dangKy">
+              <div>KHÁM DỊCH VỤ</div>
+            </button>
+            <button id="revisitBtn" class="btn-nut btn-dangKy">
+              <div>KHÁM SỨC KHỎE</div>
+            </button>
+            <button id="revisitBtn" class="btn-nut btn-dangKy">
+              <div>TÁI KHÁM THEO HẸN</div>
+            </button>
+          </div>
+          <button
+            style="
+              position: absolute;
+              top: 0;
+              right: 0;
+              padding: 20px 50px;
+              border: none;
+              background: transparent;
+            "
+            id="fullscreenBtn"
+          ></button>
         </div>
 
-        <form id="patientForm">
-          <div class="row">
-            <div class="mb-4 col-6">
+        <div id="pageQR" class="d-none">
+          <div class="text-center text-wrap">
+            <h2 class="text-heading">Đăng ký khám bệnh</h2>
+            <div class="des">ĐƯA mã vào khu vực quét QR trên thân máy</div>
+          </div>
+          <img src="/img/bhyt.png" style="width: 100%; margin: 20px 0" />
+          <div class="text-center">
+            <form>
               <input
                 type="text"
-                id="nameInput"
-                data-vnkeys
+                id="qrInput"
                 class="form-control"
-                placeholder="Nhập họ tên"
+                placeholder="Quét mã QR"
                 autocomplete="off"
               />
-            </div>
-            <div class="mb-4 col-6">
+            </form>
+
+            <button
+              id="quayLaiBtn"
+              class="btn-luu"
+              onclick="document.getElementById('pageQR').classList.add('d-none'); document.getElementById('page1').classList.remove('d-none');"
+            >
+              <div>QUAY LẠI</div>
+            </button>
+
+            <button id="tiepTheoBtn" class="mt-5 btn-luu">
+              <div>NHẬP THÔNG TIN BẰNG TAY</div>
+            </button>
+
+
+            </button>
+          </div>
+        </div>
+
+        <!-- Trang quét -->
+        <div id="page2" class="d-none">
+          <div class="text-center text-wrap">
+            <h2 class="text-heading">Đăng ký khám bệnh</h2>
+            <div class="des">CẬP NHẬT ĐẦY ĐỦ CÁC THÔNG TIN</div>
+          </div>
+
+          <div class="card-body">
+            <form id="patientForm">
               <div class="row">
-                <div class="col-6">
+                <div class="mt-input col-6">
                   <input
                     type="text"
-                    id="ageInput"
-                    inputmode="numeric"
-                    pattern="\d*"
+                    id="nameInput"
                     data-vnkeys
                     class="form-control"
-                    placeholder="Nhập tuổi"
+                    placeholder="Nhập họ tên"
                     autocomplete="off"
                   />
                 </div>
-                <div class="col-6">
-                  <div class="date-picker-container">
-                    <input
-                      type="text"
-                      id="dateInput"
-                      class="form-control"
-                      placeholder="dd/mm/yyyy"
-                      readonly
-                    />
+                <div class="mt-input col-6">
+                  <div class="row">
+                    <div class="col-6">
+                      <select id="genderSelect" placeholder="Chọn giới tính...">
+                        <option value="nam">Nam</option>
+                        <option value="nu">Nữ</option>
+                        <option value="khac">Khác</option>
+                      </select>
+                    </div>
+                    <div class="col-6">
+                      <div class="date-picker-container">
+                        <input
+                          type="text"
+                          id="dateInput"
+                          class="form-control"
+                          placeholder="Ngày sinh"
+                          readonly
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="mb-4 col-6">
-              <input
-                type="text"
-                id="idInput"
-                data-vnkeys
-                class="form-control"
-                placeholder="Nhập mã bệnh nhân"
-                autocomplete="off"
-              />
-            </div>
+              <div class="row">
+                <div class="mt-input col-12">
+                  <input
+                    type="text"
+                    id="addressInput"
+                    data-vnkeys
+                    class="form-control"
+                    placeholder="Nhập địa chỉ"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
 
-            <div class="mb-4 col-6">
-              <input
-                type="text"
-                id="addressInput"
-                data-vnkeys
-                class="form-control"
-                placeholder="Nhập địa chỉ"
-                autocomplete="off"
-              />
-            </div>
+              <div class="row">
+                <div class="mt-input col-4">
+                  <select id="tinhSelect" placeholder=""></select>
+                </div>
+                <div class="mt-input col-4">
+                  <select id="quanSelect" placeholder=""></select>
+                </div>
+                <div class="mt-input col-4">
+                  <select id="xaSelect" placeholder=""></select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="mt-input col-4">
+                  <input
+                    type="text"
+                    id="idSdt"
+                    data-vnkeys
+                    class="form-control"
+                    placeholder="Số điện thoại"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="mt-input col-4">
+                  <input
+                    type="text"
+                    id="idScc"
+                    data-vnkeys
+                    class="form-control"
+                    placeholder="Số căn cước"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="mt-input col-4">
+                  <input
+                    type="text"
+                    id="idCn"
+                    data-vnkeys
+                    class="form-control"
+                    placeholder="Cân nặng"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="mt-input col-4">
+                  <select id="quocTichSelect" placeholder="">
+                    <option value="viet-nam">Việt Nam</option>
+                    <option value="thai-lan">Thái Lan</option>
+                    <option value="lao">Lào</option>
+                  </select>
+                </div>
+                <div class="mt-input col-4">
+                  <select id="danTocSelect" placeholder="">
+                    <option value="kinh">Kinh</option>
+                    <option value="cham">Chăm</option>
+                    <option value="hoa">Hoa</option>
+                  </select>
+                </div>
+                <div class="mt-input col-4">
+                  <select id="ngheNghiepSelect" placeholder="">
+                    <option value="it">It</option>
+                    <option value="cong-nhan">Công nhân</option>
+                    <option value="khac">Khác</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button
+                  type="button"
+                  class="btn-luu"
+                  onclick="document.getElementById('page2').classList.add('d-none'); document.getElementById('pageQR').classList.remove('d-none');"
+                >
+                  QUAY LẠI
+                </button>
+
+                <button id="tiepTheoDV_btn" class="mt-5 btn-luu">
+                  <div>TIẾP THEO</div>
+                </button>
+
+              </div>
+            </form>
           </div>
-          <div class="row">
-            <div class="col-6">
-              <select id="serviceSelect" placeholder="Chọn dịch vụ...">
-                <option value="thai-do">Thai đồ</option>
-                <option value="chan-doan">Chẩn đoán hình ảnh</option>
-                <option value="xet-nghiem">Xét nghiệm tổng quát</option>
-                <option value="kham-tong-quat">Khám tổng quát</option>
-              </select>
-            </div>
-            <div class="col-6">
-              <select id="genderSelect" placeholder="Chọn giới tính...">
-                <option value="nam">Nam</option>
-                <option value="nu">Nữ</option>
-                <option value="khac">Khác</option>
-              </select>
-            </div>
+        </div>
+
+
+        <div id="pageDichVu" class="d-none">
+          <div class="text-center text-wrap">
+            <h2 class="text-heading">Đăng ký khám Bảo hiểm</h2>
+            <div class="des">CHỌN DỊCH VỤ KHÁM</div>
           </div>
           <div class="text-center">
-            <button type="submit" class="btn-luu">Đăng ký</button>
+            <form class="form-dichVu mt-5">
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="radio" name="service" value="kham-noi" />
+                  <span class="label-text">Khám Nội</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="service" value="kham-tai-mui-hong" />
+                  <span class="label-text">Khám Tai - Mũi - Họng</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="service" value="kham-ngoai" />
+                  <span class="label-text">Khám Ngoại</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="service" value="kham-rang-ham-mat" />
+                  <span class="label-text">Khám Răng - Hàm - Mặt</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="service" value="kham-phu-khoa" />
+                  <span class="label-text">Khám Phụ khoa</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="service" value="y-hoc-co-truyen" />
+                  <span class="label-text">Khám Y học cổ truyền</span>
+                </label>
+                <label class="checkbox-item full-width">
+                  <input type="radio" name="service" value="tu-van" />
+                  <span class="label-text">Tôi cần được tư vấn khám</span>
+                </label>
+              </div>
+            </form>
+
+
+            <button
+              id="quayLaiBtn"
+              class="btn-luu"
+              onclick="document.getElementById('pageDichVu').classList.add('d-none'); document.getElementById('page2').classList.remove('d-none');"
+            >
+              <div>QUAY LẠI</div>
+            </button>
+
+
+            <button id="xacNhanBtn" class="mt-5 btn-luu">
+              <div>TIẾP THEO</div>
+            </button>
+
+
+            </button>
           </div>
-        </form>
+        </div>
+
+
+        <div id="pageXacNhan" class="d-none">
+          <div class="text-center text-wrap">
+            <h2 class="text-heading">Đăng ký khám Bảo hiểm</h2>
+            
+
+            <img src="/img/tick.png" style=" width: 200px;">
+
+            <div class="des" style="color: #00bf63; font-size: 40px;">ĐĂNG KÝ KHÁM THÀNH CÔNG</div>
+
+             <div class="des" style="color: #000000; font-size: 40px;">VUI LÒNG NHẬN SỐ THỨ TỰ Xin cảm ơn!</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-ad">
+        <img src="/img/2.png" alt="Girl in a jacket" style="height: 100vh" />
       </div>
     </div>
 
@@ -171,6 +343,9 @@
         </div>
       </div>
     </div>
+    <!-- Nhớ nhúng jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- Scripts -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"

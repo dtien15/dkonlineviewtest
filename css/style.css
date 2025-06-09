@@ -20,11 +20,19 @@ body {
 
 body {
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: #f5f5f5 !important;
   margin: 0;
+  background-image: url(/img/banner.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+.mt-input {
+  margin-bottom: 15px;
 }
 
 /* hide the page title while the keyboard is open */
@@ -34,16 +42,43 @@ body.keyboard-open #page2 > h2.text-heading {
 
 body.keyboard-open {
   align-items: flex-start;
-  padding-top: 10px;
 }
 
 .form-control {
   padding: 6px 23px !important;
-  height: 70px;
+  height: 54px;
   border: 1px solid #ffffff !important;
-  font-size: 1.5rem !important;
+  font-size: 20px !important;
   border-radius: 30px !important;
 }
+/* ============== Giao diện container =============== */
+.dk-container {
+  display: flex;
+  width: 100%;
+  height: 100vh; /* hoặc đặt chiều cao phù hợp */
+}
+.left-ad,
+.right-ad {
+  width: 200px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-ad img,
+.right-ad img {
+  max-width: 100%;
+  height: auto;
+}
+
+.main-content {
+  flex: 1;
+  background: linear-gradient(#b2d8ff, #e6f2ff); /* màu nền tùy chỉnh */
+  align-items: center;
+  display: flex;
+}
+
 
 /* ============== Giao diện đăng ký =============== */
 #page1 {
@@ -51,35 +86,35 @@ body.keyboard-open {
   background: transparent !important;
 }
 
-#page2 {
+#page2, #pageQR, #pageDichVu, #pageXacNhan {
   width: 100%;
-  background: #5760b2;
-  padding: 1.5rem;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
   transition: margin-top 0.2s ease;
 }
 
 
 .text-heading {
   text-transform: uppercase;
-  font-size: clamp(32px, 5vw, 80px);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
-  margin: clamp(16px, 2vw, 32px) 0 clamp(24px, 3vw, 48px) 0;
-  display: inline-block;
-  padding: 0.5em 1em;
+  font-size: 40px;
+  font-weight: bold;
+  color: #004aad;
+  text-align: center;
   border-radius: 0.5em;
+}
+
+.des {
+  text-align: center;
+  color: #ed1c24;
+  font-size: 30px;
+   font-weight: bold;
+   text-transform: uppercase;
 }
 
 /* ============== Giao diện nút đăng ký =============== */
 .btn-nut {
   display: inline-block;
-  width: 450px;
-  padding: 60px 0px;
-  margin: 0 3%;
+  padding: 15px 0px;
+  margin: 20px 3%;
   border: none;
   border-radius: 50px;
   position: relative;
@@ -90,7 +125,7 @@ body.keyboard-open {
 }
 
 .btn-nut > div {
-  font-size: 60px;
+  font-size: 40px;
   letter-spacing: 0.1em;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
   font-weight: bold;
@@ -122,7 +157,7 @@ body.keyboard-open {
 }
 
 .btn-dangKy {
-  background-color: #4caf50;
+  background-color: #00bf63;
 }
 
 .btn-dangKy::before {
@@ -143,54 +178,31 @@ body.keyboard-open {
   box-shadow: inset -2px 5px 20px #2e7d32; /
 }
 
-.btn-taiKham {
-  background-color: #ff9800; 
-}
-
-.btn-taiKham::before {
-  box-shadow: inset 2px -5px 20px #ef6c00; 
-}
-
-.btn-taiKham::after {
-  box-shadow: inset -2px 5px 20px #ffb74d;
-}
-
-.btn-taiKham:active {
-  background-color: #fb8c00;
-}
-
-.btn-taiKham:active::before {
-  box-shadow: inset 2px -5px 20px #ffcc80; 
-}
-
-.btn-taiKham:active::after {
-  box-shadow: inset -2px 5px 20px #ef6c00;
-}
-
 .btn-luu {
-  background-color: #009688; /* Màu xanh lá tươi */
+  background-color: #a0caef;
   color: white;
   font-size: 28px;
   font-weight: bold;
   font-family: 'Segoe UI', sans-serif;
   padding: 14px 40px;
-  border: none;
+  border: 2px solid #000;
   border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: all 0.2s ease;
-  min-width: 400px;
+  width: max-content;
   margin-top: 20px;
+  margin-right: 20px;
 }
 
 .btn-luu:hover {
-  background-color: #04b4a2; 
+  background-color: #a0caef; 
   transform: scale(1.03);
   box-shadow: 0 6px 12px rgba(0,0,0,0.25);
 }
 
 .btn-luu:active {
-  background-color: #04b4a2; 
+  background-color: #a0caef; 
   transform: scale(0.98);
   box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
 }
@@ -215,6 +227,65 @@ input.blinking-cursor {
   100% {
     box-shadow: 0 0 0 3px rgba(255, 4, 4, 0.759);
   }
+}
+
+/* ============== CHECK BOX =============== */
+.form-dichVu {
+  display: flex;
+  justify-content: center;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 60px;
+  max-width: 700px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  width: 45%;
+  font-weight: bold;
+  font-size: 20px;
+  white-space: nowrap;
+}
+
+.checkbox-item.full-width {
+  width: 100%;
+}
+
+.checkbox-item input[type="radio"] {
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkbox-item input[type="radio"]:checked {
+  border-color: #00c853;
+  background-color: #00c853;
+}
+
+.checkbox-item input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+}
+
+.label-text {
+  line-height: 1;
 }
 
 /* ============== Bàn phím ảo =============== */
@@ -348,7 +419,6 @@ input.blinking-cursor {
   width: 100%; /* chiếm đầy chiều ngang cha */
   max-width: 400px; /* giới hạn tối đa */
   margin: 1rem 0; /* khoảng cách trên/dưới */
-  font-family: Arial, sans-serif;
 }
 
 
@@ -359,7 +429,7 @@ input.blinking-cursor {
   line-height: 1.5 !important; 
   background-color: #fff !important; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
-  transition: border-color 0.2s !important;
+  padding: 0px !important;
 }
 
 /* 3. Hover / Focus state */

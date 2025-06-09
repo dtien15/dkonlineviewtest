@@ -97,9 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Idle-modal + timeout ---
   let idleTimer = null,
     isModalOpen = false;
-  const idleTimeout = 9000000,
+  const idleTimeout = 90000000,
     page1 = document.getElementById("page1");
   const page2 = document.getElementById("page2");
+  const pageQR = document.getElementById("pageQR");
+  const pageDichVu = document.getElementById("pageDichVu");
+  const pageXacNhan = document.getElementById("pageXacNhan");
   const idleModal = document.getElementById("idleModal");
   const continueBtn = document.getElementById("continueBtn");
   const countdownEl = document.getElementById("countdown");
@@ -380,7 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // --- Mở lại đúng dropdown dựa trên class ---
       if (activeInput.classList.contains("choices__input--cloned")) {
-        if (activeInput.classList.contains("service-input")) {
+        if (activeInput.classList.contains("tinh-input")) {
           if (!serviceChoices.dropdown.isActive) {
             serviceChoices.showDropdown();
           }
@@ -465,27 +468,27 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // 2) Khi focus vào qrInput
-  const qrInput = document.getElementById("qrInput");
-  qrInput.addEventListener("focus", () => {
-    // Xóa hết blinking-cursor cũ trên VNKeys và qrInput (nếu còn)
-    document
-      .querySelectorAll(
-        "input[data-vnkeys].blinking-cursor, #qrInput.blinking-cursor"
-      )
-      .forEach((i) => i.classList.remove("blinking-cursor"));
+  // const qrInput = document.getElementById("qrInput");
+  // qrInput.addEventListener("focus", () => {
+  //   // Xóa hết blinking-cursor cũ trên VNKeys và qrInput (nếu còn)
+  //   document
+  //     .querySelectorAll(
+  //       "input[data-vnkeys].blinking-cursor, #qrInput.blinking-cursor"
+  //     )
+  //     .forEach((i) => i.classList.remove("blinking-cursor"));
 
-    // Thêm blinking-cursor cho qrInput
-    qrInput.classList.add("blinking-cursor");
+  //   // Thêm blinking-cursor cho qrInput
+  //   qrInput.classList.add("blinking-cursor");
 
-    // Cập nhật activeInput & đồng bộ keyboard nếu cần
-    activeInput = qrInput;
-    keyboard.setInput(qrInput.value);
-  });
+  //   // Cập nhật activeInput & đồng bộ keyboard nếu cần
+  //   activeInput = qrInput;
+  //   keyboard.setInput(qrInput.value);
+  // });
 
-  // 3) (Tùy chọn) Khi qrInput mất focus cũng xóa blinking-cursor
-  qrInput.addEventListener("blur", () => {
-    qrInput.classList.remove("blinking-cursor");
-  });
+  // // 3) (Tùy chọn) Khi qrInput mất focus cũng xóa blinking-cursor
+  // qrInput.addEventListener("blur", () => {
+  //   qrInput.classList.remove("blinking-cursor");
+  // });
 
   //////////////////////
 
@@ -532,17 +535,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Nút chuyển trang ---
   document.getElementById("registerBtn").addEventListener("click", () => {
     page1.classList.add("d-none");
-    page2.classList.remove("d-none");
+    pageQR.classList.remove("d-none");
     clearPage2Inputs();
-    // Mặc định focus vào ô QR
-    document.getElementById("qrInput").focus();
   });
-  document.getElementById("revisitBtn").addEventListener("click", () => {
-    page1.classList.add("d-none");
+
+  document.getElementById("tiepTheoBtn").addEventListener("click", () => {
+    pageQR.classList.add("d-none");
     page2.classList.remove("d-none");
     clearPage2Inputs();
-    // Mặc định focus vào ô QR
-    document.getElementById("qrInput").focus();
+  });
+
+  document.getElementById("tiepTheoDV_btn").addEventListener("click", (e) => {
+    e.preventDefault(); // quan trọng
+    page2.classList.add("d-none");
+    pageDichVu.classList.remove("d-none");
+    clearPage2Inputs();
+  });
+
+  document.getElementById("xacNhanBtn").addEventListener("click", (e) => {
+    e.preventDefault(); // quan trọng
+    pageDichVu.classList.add("d-none");
+    pageXacNhan.classList.remove("d-none");
+    clearPage2Inputs();
   });
 
   //-----------------Viết hoa chữ cái đầu mỗi từ cho Họ tên
@@ -581,12 +595,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   //------------- Hiển thị khi có ban phím
-  const heading = document.querySelector(".text-wrap >  h2.text-heading");
+  const heading = document.querySelector(".text-wrap > h2.text-heading");
+  const des = document.querySelector(".text-wrap > div.des");
+  const mainContent = document.querySelector(".main-content");
+  const mtInputs = document.querySelectorAll(".mt-input"); // thêm dòng này
 
   const observer = new MutationObserver(() => {
     const isOpen = kbContainer.classList.contains("open");
+
     document.body.classList.toggle("keyboard-open", isOpen);
     heading.style.display = isOpen ? "none" : "";
+    des.style.display = isOpen ? "none" : "";
+
+    // Thay đổi style .main-content
+    if (isOpen) {
+      mainContent.style.alignItems = "initial";
+      mainContent.style.display = "block";
+    } else {
+      mainContent.style.alignItems = "center";
+      mainContent.style.display = "flex";
+    }
+
+    // 🔽 Thay đổi margin-bottom của các .mt-input
+    mtInputs.forEach((input) => {
+      input.style.marginBottom = isOpen ? "5px" : "15px";
+    });
   });
 
   observer.observe(kbContainer, {
@@ -597,56 +630,146 @@ document.addEventListener("DOMContentLoaded", () => {
   //-----------Select
   function clearIdentifierClasses() {
     document
-      .querySelectorAll(".service-input, .gender-input")
-      .forEach((i) => i.classList.remove("service-input", "gender-input"));
+      .querySelectorAll(".tinh-input, .gender-input")
+      .forEach((i) => i.classList.remove("tinh-input", "gender-input"));
   }
 
-  // --- serviceSelect ---
-  const serviceEl = document.getElementById("serviceSelect");
-  const serviceChoices = new Choices(serviceEl, {
+  // --- tinhSelect ---
+  let tinhData = [];
+  let quanData = [];
+  let xaData = [];
+
+  const tinhEl = document.getElementById("tinhSelect");
+  const quanEl = document.getElementById("quanSelect");
+  const xaEl = document.getElementById("xaSelect");
+
+  // Choices init
+  const tinhChoices = new Choices(tinhEl, {
     searchEnabled: true,
-    placeholderValue: "--- Chọn dịch vụ ---",
+    placeholderValue: "Chọn tỉnh",
     searchPlaceholderValue: "--- Gõ để tìm ---",
     shouldCloseOnSelect: false,
-    position: "top",
+    position: "bottom",
+  });
+  const quanChoices = new Choices(quanEl, {
+    searchEnabled: true,
+    placeholderValue: "Chọn quận/huyện",
+    searchPlaceholderValue: "--- Gõ để tìm ---",
+    shouldCloseOnSelect: false,
+    position: "bottom",
+  });
+  const xaChoices = new Choices(xaEl, {
+    searchEnabled: true,
+    placeholderValue: "Chọn xã/phường",
+    searchPlaceholderValue: "--- Gõ để tìm ---",
+    shouldCloseOnSelect: false,
+    position: "bottom",
   });
 
-  // Khi mở service dropdown
-  serviceEl.addEventListener("showDropdown", () => {
-    clearIdentifierClasses();
-    const wrapper = serviceEl.closest(".choices");
-    const inp = wrapper.querySelector(".choices__input--cloned");
-    if (!inp) return;
-    inp.classList.add("service-input");
-    inp.setAttribute("data-vnkeys", "");
-    activeInput = inp;
-    keyboard.setInput(inp.value);
-    inp.focus();
+  // Load data from JSON
+  async function loadData() {
+    tinhData = await fetch("/json/DM_TinhCuTru.json").then((res) => res.json());
+    quanData = await fetch("/json/DM_QuanCuTru.json").then((res) => res.json());
+    xaData = await fetch("/json/DM_XaCuTru.json").then((res) => res.json());
 
-    // … vị trí keyboard …
-    const rect = document.getElementById("page2").getBoundingClientRect();
-    Object.assign(kbContainer.style, {
-      position: "fixed",
-      bottom: "0px",
-      left: `${rect.left}px`,
-      width: `${rect.width}px`,
-      visibility: "visible",
-      display: "block",
+    tinhChoices.setChoices(
+      tinhData.map((t) => ({ value: t.id, label: t.ten })),
+      "value",
+      "label",
+      true
+    );
+  }
+
+  // Event: chọn tỉnh
+  tinhEl.addEventListener("change", () => {
+    const selectedTinhId = parseInt(tinhEl.value);
+    const filteredQuan = quanData.filter((q) => q.idtinh === selectedTinhId);
+
+    quanChoices.clearStore();
+    xaChoices.clearStore();
+
+    quanChoices.setChoices(
+      filteredQuan.map((q) => ({ value: q.id, label: q.ten })),
+      "value",
+      "label",
+      true
+    );
+  });
+
+  // Event: chọn quận
+  quanEl.addEventListener("change", () => {
+    const selectedQuanId = parseInt(quanEl.value);
+    const filteredXa = xaData.filter((x) => x.idquan === selectedQuanId);
+
+    xaChoices.clearStore();
+
+    xaChoices.setChoices(
+      filteredXa
+        .filter((x) => x.ten !== null)
+        .map((x) => ({ value: x.id, label: x.ten })),
+      "value",
+      "label",
+      true
+    );
+  });
+
+  // Keyboard + vnkeys integration
+  function attachKeyboardDropdownLogic(element, className) {
+    element.addEventListener("showDropdown", () => {
+      clearIdentifierClasses();
+
+      const wrapper = element.closest(".choices");
+      const inp = wrapper.querySelector(".choices__input--cloned");
+      if (!inp) return;
+
+      inp.classList.add(className);
+      inp.setAttribute("data-vnkeys", "");
+      activeInput = inp;
+
+      keyboard.setInput(inp.value);
+      inp.focus();
+
+      const rect = page2.getBoundingClientRect();
+      Object.assign(kbContainer.style, {
+        position: "fixed",
+        bottom: "0px",
+        left: `${rect.left}px`,
+        width: `${rect.width}px`,
+        visibility: "visible",
+        display: "block",
+      });
+
+      kbContainer.classList.add("open");
     });
-    kbContainer.classList.add("open");
-  });
 
-  // Khi đóng service dropdown
-  serviceEl.addEventListener("hideDropdown", clearIdentifierClasses);
+    element.addEventListener("hideDropdown", clearIdentifierClasses);
+  }
+
+  function clearIdentifierClasses() {
+    document.querySelectorAll(".choices__input--cloned").forEach((input) => {
+      input.removeAttribute("data-vnkeys");
+      input.classList.remove("tinh-input", "quan-input", "xa-input");
+    });
+    kbContainer.classList.remove("open");
+    kbContainer.style.visibility = "hidden";
+  }
+
+  // Gán logic bàn phím ảo cho từng dropdown
+  attachKeyboardDropdownLogic(tinhEl, "tinh-input");
+  attachKeyboardDropdownLogic(quanEl, "quan-input");
+  attachKeyboardDropdownLogic(xaEl, "xa-input");
+
+  // Load dữ liệu
+  loadData();
 
   // --- genderSelect ---
   const genderEl = document.getElementById("genderSelect");
   const genderChoices = new Choices(genderEl, {
     searchEnabled: true,
-    placeholderValue: "--- Chọn giới tính ---",
+    placeholderValue: "Giới tính",
     searchPlaceholderValue: "--- Gõ để tìm ---",
     shouldCloseOnSelect: false,
-    position: "top",
+    position: "bottom",
   });
 
   // Khi mở gender dropdown
@@ -675,7 +798,147 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Khi đóng gender dropdown
-  genderEl.addEventListener("hideDropdown", clearIdentifierClasses);
+  genderEl.addEventListener("hideDropdown", () => {
+    // Kiểm tra nếu không phải dropdown giới tính thì mới ẩn keyboard
+    if (activeInput?.classList.contains("gender-input")) {
+      // Vẫn đang tương tác với gender => KHÔNG ẩn keyboard
+      return;
+    }
+
+    clearIdentifierClasses(); // Đoạn này mới thực sự clear keyboard
+  });
+
+  // --- quocTichSelect ---
+  const quocTichEl = document.getElementById("quocTichSelect");
+  const quocTichChoices = new Choices(quocTichEl, {
+    searchEnabled: true,
+    placeholderValue: "Quốc tích",
+    searchPlaceholderValue: "--- Gõ để tìm ---",
+    shouldCloseOnSelect: false,
+    position: "top",
+  });
+
+  // Khi mở quocTich dropdown
+  quocTichEl.addEventListener("showDropdown", () => {
+    clearIdentifierClasses();
+    const wrapper = quocTichEl.closest(".choices");
+    const inp = wrapper.querySelector(".choices__input--cloned");
+    if (!inp) return;
+    inp.classList.add("quocTich-input");
+    inp.setAttribute("data-vnkeys", "");
+    activeInput = inp;
+    keyboard.setInput(inp.value);
+    inp.focus();
+
+    // … vị trí keyboard …
+    const rect = document.getElementById("page2").getBoundingClientRect();
+    Object.assign(kbContainer.style, {
+      position: "fixed",
+      bottom: "0px",
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      visibility: "visible",
+      display: "block",
+    });
+    kbContainer.classList.add("open");
+  });
+
+  // Khi đóng danToc dropdown
+  genderEl.addEventListener("hideDropdown", () => {
+    if (activeInput?.classList.contains("quocTich-input")) {
+      return;
+    }
+
+    clearIdentifierClasses(); // Đoạn này mới thực sự clear keyboard
+  });
+
+  // --- danTocSelect ---
+  const danTocEl = document.getElementById("danTocSelect");
+  const danTocChoices = new Choices(danTocEl, {
+    searchEnabled: true,
+    placeholderValue: "Dân tộc",
+    searchPlaceholderValue: "--- Gõ để tìm ---",
+    shouldCloseOnSelect: false,
+    position: "top",
+  });
+
+  // Khi mở danToc dropdown
+  danTocEl.addEventListener("showDropdown", () => {
+    clearIdentifierClasses();
+    const wrapper = danTocEl.closest(".choices");
+    const inp = wrapper.querySelector(".choices__input--cloned");
+    if (!inp) return;
+    inp.classList.add("danToc-input");
+    inp.setAttribute("data-vnkeys", "");
+    activeInput = inp;
+    keyboard.setInput(inp.value);
+    inp.focus();
+
+    // … vị trí keyboard …
+    const rect = document.getElementById("page2").getBoundingClientRect();
+    Object.assign(kbContainer.style, {
+      position: "fixed",
+      bottom: "0px",
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      visibility: "visible",
+      display: "block",
+    });
+    kbContainer.classList.add("open");
+  });
+
+  // Khi đóng danToc dropdown
+  genderEl.addEventListener("hideDropdown", () => {
+    if (activeInput?.classList.contains("danToc-input")) {
+      return;
+    }
+
+    clearIdentifierClasses(); // Đoạn này mới thực sự clear keyboard
+  });
+
+  // --- ngheNghiepSelect ---
+  const ngheNghiepEl = document.getElementById("ngheNghiepSelect");
+  const ngheNghiepChoices = new Choices(ngheNghiepEl, {
+    searchEnabled: true,
+    placeholderValue: "Nghề nghiệp",
+    searchPlaceholderValue: "--- Gõ để tìm ---",
+    shouldCloseOnSelect: false,
+    position: "top",
+  });
+
+  // Khi mở ngheNghiep dropdown
+  ngheNghiepEl.addEventListener("showDropdown", () => {
+    clearIdentifierClasses();
+    const wrapper = ngheNghiepEl.closest(".choices");
+    const inp = wrapper.querySelector(".choices__input--cloned");
+    if (!inp) return;
+    inp.classList.add("ngheNghiep-input");
+    inp.setAttribute("data-vnkeys", "");
+    activeInput = inp;
+    keyboard.setInput(inp.value);
+    inp.focus();
+
+    // … vị trí keyboard …
+    const rect = document.getElementById("page2").getBoundingClientRect();
+    Object.assign(kbContainer.style, {
+      position: "fixed",
+      bottom: "0px",
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      visibility: "visible",
+      display: "block",
+    });
+    kbContainer.classList.add("open");
+  });
+
+  // Khi đóng ngheNghiep dropdown
+  genderEl.addEventListener("hideDropdown", () => {
+    if (activeInput?.classList.contains("ngheNghiep-input")) {
+      return;
+    }
+
+    clearIdentifierClasses(); // Đoạn này mới thực sự clear keyboard
+  });
 
   // --- Giữ dropdown khi click keyboard ---
   kbContainer.addEventListener("click", (event) => {
