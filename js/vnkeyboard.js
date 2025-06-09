@@ -646,7 +646,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 🔽 Thay đổi margin-bottom của các .mt-input
     mtInputs.forEach((input) => {
-      input.style.marginBottom = isOpen ? "5px" : "15px";
+      input.style.marginBottom = isOpen ? "10px" : "15px";
     });
   });
 
