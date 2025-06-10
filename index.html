@@ -5,23 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HELLO</title>
     <link rel="stylesheet" href="./css/style.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tiny-date-picker/3.2.0/tiny-date-picker.min.css"
-      integrity="sha512-GX1pvVnXNYhna2E0kzzepxYJwzn72Mpa2cgcxPsRAAduWlUl3/z26Q6fDOWpKJIHSYw8eHTQZPzkY45cWu8Rcw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="./lib/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="./lib/tiny-date/tiny-date-picker.min.css" />
+    <link rel="stylesheet" href="./lib/choices/choices.min.css" />
     <link rel="stylesheet" href="./lib/keyboard/index.css" />
   </head>
   <body>
@@ -40,12 +26,11 @@
           <div class="card-body">
             <button
               id="registerBtn"
-              href="/pageNhaptt.html"
               class="btn-nut btn-dangKy"
             >
               <div>KHÁM BẢO HIỂM Y TẾ</div>
             </button>
-            <button id="revisitBtn" class="btn-nut btn-dangKy">
+            <button id="dkKhamDVBtn" class="btn-nut btn-dangKy">
               <div>KHÁM DỊCH VỤ</div>
             </button>
             <button id="revisitBtn" class="btn-nut btn-dangKy">
@@ -67,10 +52,10 @@
             id="fullscreenBtn"
           ></button>
         </div>
-
+        <!-- Khám bảo hiểm  -->
         <div id="pageQR" class="d-none">
           <div class="text-center text-wrap">
-            <h2 class="text-heading">Đăng ký khám bệnh</h2>
+            <h2 class="text-heading">Đăng ký khám Bảo hiểm</h2>
             <div class="des">ĐƯA mã vào khu vực quét QR trên thân máy</div>
           </div>
           <img src="./img/bhyt.png" style="width: 100%; margin: 20px 0" />
@@ -85,13 +70,10 @@
               />
             </form>
 
-            <button
-              id="quayLaiBtn"
-              class="btn-luu"
-              onclick="document.getElementById('pageQR').classList.add('d-none'); document.getElementById('page1').classList.remove('d-none');"
-            >
+            <button id="quayLaiBtn" class="btn-luu">
               <div>QUAY LẠI</div>
             </button>
+
 
             <button id="tiepTheoBtn" class="mt-5 btn-luu">
               <div>NHẬP THÔNG TIN BẰNG TAY</div>
@@ -102,10 +84,9 @@
           </div>
         </div>
 
-        <!-- Trang quét -->
         <div id="page2" class="d-none">
-          <div class="text-center text-wrap">
-            <h2 class="text-heading">Đăng ký khám bệnh</h2>
+          <div class="text-center text-wrap1">
+            <h2 class="text-heading">Đăng ký khám Bảo hiểm</h2>
             <div class="des">CẬP NHẬT ĐẦY ĐỦ CÁC THÔNG TIN</div>
           </div>
 
@@ -246,7 +227,6 @@
           </div>
         </div>
 
-
         <div id="pageDichVu" class="d-none">
           <div class="text-center text-wrap">
             <h2 class="text-heading">Đăng ký khám Bảo hiểm</h2>
@@ -305,7 +285,6 @@
           </div>
         </div>
 
-
         <div id="pageXacNhan" class="d-none">
           <div class="text-center text-wrap">
             <h2 class="text-heading">Đăng ký khám Bảo hiểm</h2>
@@ -322,6 +301,8 @@
             </button>
           </div>
         </div>
+        <!-- End Khám bảo hiểm  -->
+
       </div>
 
       <div class="right-ad">
@@ -347,26 +328,13 @@
         </div>
       </div>
     </div>
-    <!-- Nhớ nhúng jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Scripts -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/tiny-date-picker/3.2.0/tiny-date-picker.min.js"
-      integrity="sha512-QqiSuf3ZSPAgg/HiG4ppk0KnzDmXGYj5OlwDaKTuZdRokMBGPFV05P4bmYDVpUaxSw8jZflipfvPQtJOxVWswg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <!-- Choices.js JS -->
-    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="./lib/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="./lib/tiny-date/tiny-date-picker.min.js"></script>
+    <script src="./lib/choices/choices.min.js"></script>
     <script src="./lib/keyboard/VNKeys.js"></script>
     <script src="./lib/keyboard/index.min.js"></script>
-
     <script src="./js/vnkeyboard.js"></script>
   </body>
 </html>

@@ -86,7 +86,7 @@ body.keyboard-open {
   background: transparent !important;
 }
 
-#page2, #pageQR, #pageDichVu, #pageXacNhan {
+#page2, #pageQR, #pageDichVu, #pageXacNhan,#page2DV  {
   width: 100%;
   padding: 0.5rem;
   transition: margin-top 0.2s ease;
@@ -499,4 +499,10 @@ input.blinking-cursor {
 
 .choices__list--dropdown, .choices__list[aria-expanded] {
     border-radius: 20px !important;
+}
+
+@media (min-width: 640px) {
+    .choices__list--dropdown .choices__item--selectable[data-select-text], .choices__list[aria-expanded] .choices__item--selectable[data-select-text] {
+        padding-right: 0px !important;
+    }
 }
