@@ -695,8 +695,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const isOpen = kbContainer.classList.contains("open");
 
     document.body.classList.toggle("keyboard-open", isOpen);
-    heading.style.display = isOpen ? "none" : "";
-    des.style.display = isOpen ? "none" : "";
+    // heading.style.display = isOpen ? "none" : "";
+    // des.style.display = isOpen ? "none" : "";
 
     // Thay đổi style .main-content
     if (isOpen) {
