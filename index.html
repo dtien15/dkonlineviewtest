@@ -24,10 +24,7 @@
             <div class="des">VUI LÒNG CHỌN DỊCH VỤ MUỐN KHÁM</div>
           </div>
           <div class="card-body">
-            <button
-              id="registerBtn"
-              class="btn-nut btn-dangKy"
-            >
+            <button id="registerBtn" class="btn-nut btn-dangKy">
               <div>KHÁM BẢO HIỂM Y TẾ</div>
             </button>
             <button id="dkKhamDVBtn" class="btn-nut btn-dangKy">
@@ -74,13 +71,35 @@
               <div>QUAY LẠI</div>
             </button>
 
-
             <button id="tiepTheoBtn" class="mt-5 btn-luu">
               <div>NHẬP THÔNG TIN BẰNG TAY</div>
             </button>
 
-
+            <button class="open-modal-btn" onclick="openModal()">
+              Mở thông báo thẻ hết hạn
             </button>
+
+            <div class="modal-overlay" id="modalOverlay">
+              <div class="expired-card-modal">
+                <div class="modal-header">
+                  <button class="close-btn" onclick="closeModal()">×</button>
+                </div>
+                <div class="modal-body">
+                  <h2 class="expired-title">THẺ ĐÃ HẾT HẠN !</h2>
+                  <p class="message-bold">
+                    QUÝ KHÁCH ĐẾN QUẦY TIẾP NHẬN<br />ĐỂ ĐƯỢC NHÂN VIÊN HỖ TRỢ
+                  </p>
+                  <p class="message-sub">
+                    QUÝ KHÁCH MUỐN CHUYỂN SANG<br />
+                    KHÁM DỊCH VỤ VUI LÒNG CHỌN
+                    <span class="highlight-blue">TIẾP TỤC</span>
+                  </p>
+                  <button class="continue-btnDV" onclick="closeModal()">
+                    TIẾP TỤC
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -101,12 +120,14 @@
                     class="form-control"
                     placeholder="Nhập họ tên"
                     autocomplete="off"
+                    required
                   />
                 </div>
                 <div class="mt-input col-6">
                   <div class="row">
                     <div class="col-6">
-                      <select id="genderSelect" placeholder="Chọn giới tính...">
+                      <select id="genderSelect" required>
+                        <option value="">Chọn giới tính...</option>
                         <option value="nam">Nam</option>
                         <option value="nu">Nữ</option>
                         <option value="khac">Khác</option>
@@ -120,6 +141,7 @@
                           class="form-control"
                           placeholder="Ngày sinh"
                           readonly
+                          required
                         />
                       </div>
                     </div>
@@ -136,19 +158,27 @@
                     class="form-control"
                     placeholder="Nhập địa chỉ"
                     autocomplete="off"
+                    required
                   />
                 </div>
               </div>
 
               <div class="row">
                 <div class="mt-input col-4">
-                  <select id="tinhSelect" placeholder=""></select>
+                  <select id="tinhSelect" required>
+                    <option value="">Tỉnh</option>
+                    <!-- Các option sẽ được thêm bằng JS -->
+                  </select>
                 </div>
                 <div class="mt-input col-4">
-                  <select id="quanSelect" placeholder=""></select>
+                  <select id="quanSelect" required>
+                    <option value="">Quận</option>
+                  </select>
                 </div>
                 <div class="mt-input col-4">
-                  <select id="xaSelect" placeholder=""></select>
+                  <select id="xaSelect" required>
+                    <option value="">Xã</option>
+                  </select>
                 </div>
               </div>
 
@@ -161,6 +191,7 @@
                     class="form-control"
                     placeholder="Số điện thoại"
                     autocomplete="off"
+                    required
                   />
                 </div>
                 <div class="mt-input col-4">
@@ -171,38 +202,43 @@
                     class="form-control"
                     placeholder="Số căn cước"
                     autocomplete="off"
+                    required
                   />
                 </div>
                 <div class="mt-input col-4">
                   <input
-                    type="text"
+                    type="number"
                     id="idCn"
-                    data-vnkeys
                     class="form-control"
                     placeholder="Cân nặng"
                     autocomplete="off"
+                    min="1"
+                    required
                   />
                 </div>
               </div>
 
               <div class="row">
                 <div class="mt-input col-4">
-                  <select id="quocTichSelect" placeholder="">
+                  <select id="quocTichSelect" required>
+                    <option value="">Quốc tịch</option>
                     <option value="viet-nam">Việt Nam</option>
                     <option value="thai-lan">Thái Lan</option>
                     <option value="lao">Lào</option>
                   </select>
                 </div>
                 <div class="mt-input col-4">
-                  <select id="danTocSelect" placeholder="">
+                  <select id="danTocSelect" required>
+                    <option value="">Dân tộc</option>
                     <option value="kinh">Kinh</option>
                     <option value="cham">Chăm</option>
                     <option value="hoa">Hoa</option>
                   </select>
                 </div>
                 <div class="mt-input col-4">
-                  <select id="ngheNghiepSelect" placeholder="">
-                    <option value="it">It</option>
+                  <select id="ngheNghiepSelect" required>
+                    <option value="">Nghề nghiệp</option>
+                    <option value="it">IT</option>
                     <option value="cong-nhan">Công nhân</option>
                     <option value="khac">Khác</option>
                   </select>
@@ -221,7 +257,6 @@
                 <button id="tiepTheoDV_btn" class="mt-2 btn-luu">
                   <div>TIẾP THEO</div>
                 </button>
-
               </div>
             </form>
           </div>
@@ -240,7 +275,11 @@
                   <span class="label-text">Khám Nội</span>
                 </label>
                 <label class="checkbox-item">
-                  <input type="radio" name="service" value="kham-tai-mui-hong" />
+                  <input
+                    type="radio"
+                    name="service"
+                    value="kham-tai-mui-hong"
+                  />
                   <span class="label-text">Khám Tai - Mũi - Họng</span>
                 </label>
                 <label class="checkbox-item">
@@ -248,7 +287,11 @@
                   <span class="label-text">Khám Ngoại</span>
                 </label>
                 <label class="checkbox-item">
-                  <input type="radio" name="service" value="kham-rang-ham-mat" />
+                  <input
+                    type="radio"
+                    name="service"
+                    value="kham-rang-ham-mat"
+                  />
                   <span class="label-text">Khám Răng - Hàm - Mặt</span>
                 </label>
                 <label class="checkbox-item">
@@ -266,7 +309,6 @@
               </div>
             </form>
 
-
             <button
               id="quayLaiBtn"
               class="btn-luu"
@@ -275,12 +317,8 @@
               <div>QUAY LẠI</div>
             </button>
 
-
             <button id="xacNhanBtn" class="mt-5 btn-luu">
               <div>TIẾP THEO</div>
-            </button>
-
-
             </button>
           </div>
         </div>
@@ -288,13 +326,16 @@
         <div id="pageXacNhan" class="d-none">
           <div class="text-center text-wrap">
             <h2 class="text-heading">Đăng ký khám Bảo hiểm</h2>
-            
 
-            <img src="./img/tick.png" style=" width: 200px;">
+            <img src="./img/tick.png" style="width: 200px" />
 
-            <div class="des" style="color: #00bf63; font-size: 40px;">ĐĂNG KÝ KHÁM THÀNH CÔNG</div>
+            <div class="des" style="color: #00bf63; font-size: 40px">
+              ĐĂNG KÝ KHÁM THÀNH CÔNG
+            </div>
 
-             <div class="des" style="color: #000000; font-size: 40px;">VUI LÒNG NHẬN SỐ THỨ TỰ Xin cảm ơn!</div>
+            <div class="des" style="color: #000000; font-size: 40px">
+              VUI LÒNG NHẬN SỐ THỨ TỰ Xin cảm ơn!
+            </div>
 
             <button id="veTrangChinhBtn" class="mt-5 btn-luu">
               <div>VỀ TRANG CHÍNH</div>
@@ -302,7 +343,6 @@
           </div>
         </div>
         <!-- End Khám bảo hiểm  -->
-
       </div>
 
       <div class="right-ad">

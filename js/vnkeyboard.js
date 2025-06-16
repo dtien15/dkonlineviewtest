@@ -616,11 +616,51 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // 5. Chuyển từ Thông tin người bệnh => Dịch vụ
+  function validateChoicesSelect(id) {
+    const select = document.getElementById(id);
+    const container = select.closest(".choices");
+
+    if (!select.value) {
+      container.classList.add("select-error");
+      return false;
+    } else {
+      container.classList.remove("select-error");
+      return true;
+    }
+  }
+
   document.getElementById("tiepTheoDV_btn").addEventListener("click", (e) => {
-    e.preventDefault(); // tránh submit form
-    page2.classList.add("d-none");
-    pageDichVu.classList.remove("d-none");
-    updateHeadingByFlow(); // cập nhật tiêu đề theo luồng
+    e.preventDefault();
+    const form = document.getElementById("patientForm");
+
+    // Kiểm tra các select dùng Choices.js
+    const isGenderValid = validateChoicesSelect("genderSelect");
+    const isQuocTichValid = validateChoicesSelect("quocTichSelect");
+    const isDanTocValid = validateChoicesSelect("danTocSelect");
+    const isNgheNghiepValid = validateChoicesSelect("ngheNghiepSelect");
+
+    // Kiểm tra các input thường
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // Nếu có bất kỳ select lỗi
+    if (
+      !isGenderValid ||
+      !isQuocTichValid ||
+      !isDanTocValid ||
+      !isNgheNghiepValid
+    ) {
+      // Có thể thêm toast / alert nếu bạn muốn
+      // alert("Vui lòng chọn đầy đủ các trường giới tính, quốc tịch, dân tộc, nghề nghiệp!");
+      return;
+    }
+
+    // Chuyển trang nếu hợp lệ
+    document.getElementById("page2").classList.add("d-none");
+    document.getElementById("pageDichVu").classList.remove("d-none");
+    updateHeadingByFlow();
   });
 
   // 6. Chuyển từ Dịch vụ => Xác nhận
@@ -650,6 +690,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateHeadings("Đăng ký khám bệnh");
   });
 
+  //-----------------ĐỊNH DẠNG INPUT
   //-----------------Viết hoa chữ cái đầu mỗi từ cho Họ tên
   const nameInput = document.getElementById("nameInput");
   nameInput.addEventListener("input", (e) => {
@@ -662,6 +703,71 @@ document.addEventListener("DOMContentLoaded", () => {
     e.target.value = v;
     // đặt lại con trỏ
     e.target.setSelectionRange(pos, pos);
+  });
+  //-----------------SDT
+  const inputSDT = document.getElementById("idSdt");
+
+  // Chặn nhập chữ, chỉ cho nhập số
+  inputSDT.addEventListener("input", function () {
+    // Loại bỏ tất cả ký tự không phải số
+    this.value = this.value.replace(/[^0-9]/g, "");
+
+    // Giới hạn chỉ 10 số
+    if (this.value.length > 10) {
+      this.value = this.value.slice(0, 10);
+    }
+  });
+
+  // Kiểm tra định dạng khi rời khỏi ô input
+  inputSDT.addEventListener("blur", function () {
+    const phone = this.value;
+    const regex = /^(0[3|5|7|8|9])[0-9]{8}$/;
+    if (phone && !regex.test(phone)) {
+      this.value = ""; // Xóa nếu không đúng định dạng
+    }
+  });
+
+  //-----------------CCCD
+
+  const inputCccd = document.getElementById("idScc");
+
+  // Chặn nhập chữ, chỉ cho phép số
+  inputCccd.addEventListener("input", function () {
+    this.value = this.value.replace(/[^0-9]/g, "");
+
+    // Giới hạn độ dài tối đa: CCCD thường là 12 số
+    if (this.value.length > 12) {
+      this.value = this.value.slice(0, 12);
+    }
+  });
+
+  // Kiểm tra khi rời khỏi ô nhập
+  inputCccd.addEventListener("blur", function () {
+    const cccd = this.value;
+    const regex = /^[0-9]{12}$/; // CCCD là đúng 12 chữ số
+    if (cccd && !regex.test(cccd)) {
+      this.value = ""; // Xoá nếu không đúng định dạng
+    }
+  });
+
+  //----------------- Cân nặng
+  const inputCn = document.getElementById("idCn");
+
+  inputCn.addEventListener("input", function () {
+    // Chỉ cho số, loại bỏ chữ, dấu trừ, ký tự đặc biệt
+    this.value = this.value.replace(/[^0-9]/g, "");
+
+    // Tùy chọn: Nếu muốn giới hạn tối đa 3 chữ số (ví dụ: 999kg)
+    if (this.value.length > 3) {
+      this.value = this.value.slice(0, 3);
+    }
+  });
+
+  // Nếu người dùng để trống hoặc nhập 0 thì có thể xử lý thêm nếu cần
+  inputCn.addEventListener("blur", function () {
+    if (this.value && parseInt(this.value) <= 0) {
+      this.value = ""; // Xoá nếu nhỏ hơn hoặc bằng 0
+    }
   });
 
   //------------- Chặn sự kiện zoom màn hình
@@ -1145,3 +1251,11 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("User chọn:", formatFn(date));
   });
 });
+
+function openModal() {
+  document.getElementById("modalOverlay").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("modalOverlay").style.display = "none";
+}
